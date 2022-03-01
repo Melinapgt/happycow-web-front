@@ -18,6 +18,10 @@ p {
 .container {
   max-width: 1380px;
   margin: 0px auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
 }
 
 /* HEADER --------------------*/
@@ -26,6 +30,7 @@ p {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 10px;
 }
 
 .header img {
@@ -73,4 +78,75 @@ p {
 
 .review-section {
   margin-bottom: 5px;
+}
+
+.link-restaurant {
+  text-decoration: none;
+}
+
+/* RESTAURANT PAGE-------------------- */
+
+/* .restaurant-page .container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 3px solid blue;
+} */
+
+section {
+  padding: 5px;
+  border: 3px solid blue;
+  width: 67%;
+  display: flex;
+  flex-direction: column;
+}
+
+section:not(.carrousel-restaurant-pictures img) {
+  justify-content: center;
+}
+
+aside {
+  border: 3px solid orange;
+  padding: 5px;
+  margin-left: 20px;
+  width: 33%;
+}
+
+.bloc-text {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.restaurant-page .description {
+  width: 90%;
+}
+
+.carrousel-restaurant-pictures {
+  width: 90%;
+  border: 3px solid green;
+  padding: 10px;
+  display: flex;
+  overflow: hidden;
+  overflow-x: scroll;
+  margin: 0 auto;
+}
+
+.carrousel-restaurant-pictures img {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 10px;
+  margin-right: 20px;
+}
+
+.restaurant-infos {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.item-restaurant-infos {
+  margin-right: 50px;
 }
