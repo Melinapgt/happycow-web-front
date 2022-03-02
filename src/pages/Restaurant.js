@@ -3,15 +3,34 @@ import { useLocation } from "react-router-dom";
 import restaurants from "../assets/restaurants.json";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import GoogleMapReact from "google-map-react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 const Restaurant = () => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [dataRestaurant, setDataRestaurant] = useState();
   const location = useLocation();
   const { placeId } = location.state;
-  return (
+
+  useEffect(() => {
+    const getRestaurant = async () => {
+      const response = await axios.get("http://localhost:3000/", {
+        placeId,
+      });
+      console.log(response.data);
+      setDataRestaurant(response.data);
+      setIsLoading(false);
+    };
+    getRestaurant();
+  }, [placeId]);
+
+  return isLoading ? (
+    <div>En cours de chargement ...</div>
+  ) : (
     <div className="restaurant-page">
       <div className="container">
         <section>
-          {restaurants.map((restaurant, index) => {
+          {dataRestaurant.map((restaurant, index) => {
             return (
               <div key={restaurant.placeId}>
                 {placeId === restaurant.placeId && (

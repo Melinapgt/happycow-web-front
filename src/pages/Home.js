@@ -1,18 +1,36 @@
 import "../App.css";
-import restaurants from "../assets/restaurants.json";
 import StarRatings from "react-star-ratings";
 import LinesEllipsis from "react-lines-ellipsis";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const Home = () => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [dataRestaurant, setDataRestaurant] = useState();
+
   function getRandomInt(max) {
     return Math.floor(Math.random() * max);
   }
 
-  return (
+  useEffect(() => {
+    const getRestaurants = async () => {
+      const response = await axios.get("http://localhost:3000/");
+      console.log(response.data);
+      setDataRestaurant(response.data);
+      setIsLoading(false);
+    };
+    getRestaurants();
+  }, []);
+
+  return isLoading ? (
+    <div>En cours de chargement ...</div>
+  ) : (
     <div className="homepage">
       <div className="container">
-        {restaurants.map((restaurant, index) => {
+        {dataRestaurant.map((restaurant, index) => {
+          const description = JSON.stringify(restaurant.description);
+
           return (
             <div key={restaurant.placeId}>
               <div className="restaurants-section">
@@ -21,7 +39,6 @@ const Home = () => {
                     className="link-restaurant"
                     to={`/restaurant/${restaurant.name}`}
                     state={{
-                      name: restaurant.name,
                       placeId: restaurant.placeId,
                     }}
                   >
@@ -35,7 +52,6 @@ const Home = () => {
                     className="link-restaurant"
                     to={`/restaurant/${restaurant.name}`}
                     state={{
-                      name: restaurant.name,
                       placeId: restaurant.placeId,
                     }}
                   >
@@ -53,16 +69,16 @@ const Home = () => {
                     />
                     <span> {getRandomInt(500)} reviews</span>
                   </div>
-                  <p className="restaurant-des">{restaurant.description}</p>
-                  {/* <div>
+                  {/* <p className="restaurant-des">{restaurant.description}</p> */}
+                  <div className="homepage-description">
                     <LinesEllipsis
-                      text={restaurant.description}
+                      text={description}
                       maxLine="3"
                       ellipsis="..."
                       trimRight
                       basedOn="letters"
                     />
-                  </div> */}
+                  </div>
                 </div>
               </div>
             </div>
