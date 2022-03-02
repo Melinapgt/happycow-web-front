@@ -4,6 +4,7 @@ import LinesEllipsis from "react-lines-ellipsis";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Hero from "../components/Hero";
 
 const Home = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -27,6 +28,7 @@ const Home = () => {
     <div>En cours de chargement ...</div>
   ) : (
     <div className="homepage">
+      <Hero />
       <div className="container">
         {dataRestaurant.map((restaurant, index) => {
           const description = JSON.stringify(restaurant.description);
@@ -85,7 +87,6 @@ const Home = () => {
           );
         })}
       </div>
-      Home Component
     </div>
   );
 };
