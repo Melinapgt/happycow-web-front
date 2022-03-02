@@ -35,6 +35,11 @@ const Restaurant = () => {
     <div>En cours de chargement ...</div>
   ) : (
     <div className="restaurant-page">
+      <div className="banner">
+        <div className="banner-container">
+          <h1>{dataRestaurant.name}</h1>
+        </div>
+      </div>
       <div className="container">
         <section>
           <div className="restaurant-infos">
@@ -76,7 +81,7 @@ const Restaurant = () => {
           </div>
         </section>
         <aside>
-          <div>
+          <div className="aside-bloc1">
             {/* map */}
             <div className="restaurant-map">
               <GoogleMapReact
@@ -109,8 +114,8 @@ const Restaurant = () => {
               </div>
             </div>
           </div>
+          <div className="aside-bloc2">liste resto proches</div>
         </aside>
-        <div>liste resto proches</div>
       </div>
     </div>
   );

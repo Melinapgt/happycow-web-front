@@ -14,6 +14,7 @@ import {
   faLink,
   faMagnifyingGlass,
 } from "@fortawesome/free-solid-svg-icons";
+import LoginModal from "./components/LoginModal";
 library.add(faStar, faPhone, faLocationDot, faClock, faLink, faMagnifyingGlass);
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
     <div className="app">
       <Router>
         <Header />
+        <LoginModal />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/restaurant/:name" element={<Restaurant />} />
