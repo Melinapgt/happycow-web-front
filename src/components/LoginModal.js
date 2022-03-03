@@ -1,11 +1,19 @@
 import { useState } from "react";
 import "../App.css";
 import picture from "../assets/vegan.jpg";
+import cow from "../assets/head.jpeg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import axios from "axios";
 
 const LoginModal = (props) => {
   const { show, setShow } = props;
   const [loginWindow, setLoginWindow] = useState(true);
+  const [email, setEmail] = useState();
+  const [username, setUsername] = useState();
+  const [password, setPassword] = useState();
+  const [message, setMessage] = useState();
+  const [created, setCreated] = useState(false);
+  const [data, setData] = useState();
 
   const handleClickLoginBtn = () => {};
 
@@ -22,6 +30,25 @@ const LoginModal = (props) => {
   const handleClickLoginText = () => {
     if (loginWindow === false) {
       setLoginWindow(true);
+    }
+  };
+
+  const handleSubmitSignup = async (event) => {
+    event.preventDefault();
+    try {
+      const response = await axios.post("http://localhost:3000/signup", {
+        email,
+        username,
+        password,
+      });
+      console.log(response.data);
+      console.log(response.status);
+      setData(response.data);
+      if (response.status === 201) {
+        setCreated(true);
+      }
+    } catch (error) {
+      console.log("error.response signup==>", error.response);
     }
   };
 
@@ -71,14 +98,38 @@ const LoginModal = (props) => {
                   <button onClick={handleClickLoginBtn}>Login</button>
                 </div>
               </form>
+            ) : created ? (
+              <div className="welcome">
+                <img src={cow} alt="" />
+                <div>Welcome {data.username} !</div>
+                <p>{data.message}</p>
+              </div>
             ) : (
-              <form className="modal-form">
+              <form onSubmit={handleSubmitSignup} className="modal-form">
                 <p>Email</p>
-                <input type="text" placeholder="Email" />
+                <input
+                  type="text"
+                  placeholder="Email"
+                  onChange={(event) => {
+                    setEmail(event.target.value);
+                  }}
+                />
                 <p>Username</p>
-                <input type="text" placeholder="Username" />
+                <input
+                  type="text"
+                  placeholder="Username"
+                  onChange={(event) => {
+                    setUsername(event.target.value);
+                  }}
+                />
                 <p>Password</p>
-                <input type="text" placeholder="Password" />
+                <input
+                  type="text"
+                  placeholder="Password"
+                  onChange={(event) => {
+                    setPassword(event.target.value);
+                  }}
+                />
                 <div className="modal-btn">
                   <button type="submit">Sign Up</button>
                 </div>
