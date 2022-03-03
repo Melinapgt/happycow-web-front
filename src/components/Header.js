@@ -4,9 +4,14 @@ import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const Header = () => {
+const Header = (props) => {
   const location = useLocation();
+  const { setShow } = props;
   console.log(location);
+
+  const handleClick = () => {
+    setShow(true);
+  };
   return (
     <div className="header">
       <Link to="/">
@@ -23,7 +28,7 @@ const Header = () => {
       )}
 
       <div className="header-btn">
-        <button>Login | Join </button>
+        <button onClick={handleClick}>Login | Join </button>
       </div>
     </div>
   );
