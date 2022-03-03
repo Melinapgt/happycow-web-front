@@ -6,12 +6,17 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Header = (props) => {
   const location = useLocation();
-  const { setShow } = props;
-  console.log(location);
+  const { setShow, setUser, userToken, usernameCookies } = props;
+  // console.log(location);
 
   const handleClick = () => {
     setShow(true);
   };
+
+  const handleClickLogout = () => {
+    setUser(null);
+  };
+
   return (
     <div className="header">
       <Link to="/">
@@ -28,7 +33,14 @@ const Header = (props) => {
       )}
 
       <div className="header-btn">
-        <button onClick={handleClick}>Login | Join </button>
+        {userToken ? (
+          <div className="connected">
+            <div className="welcome-back">Hi {usernameCookies} !</div>
+            <button onClick={handleClickLogout}>Logout</button>
+          </div>
+        ) : (
+          <button onClick={handleClick}>Login | Join </button>
+        )}
       </div>
     </div>
   );

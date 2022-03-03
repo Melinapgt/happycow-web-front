@@ -12,6 +12,7 @@
     "axios": "^0.26.0",
     "dotenv": "^16.0.0",
     "google-map-react": "^2.1.10",
+    "js-cookie": "^3.0.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-lines-ellipsis": "^0.15.0",

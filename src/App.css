@@ -58,6 +58,17 @@ p,
   margin-right: 30px;
 }
 
+.welcome-back {
+  color: #7c4ec4;
+  font-weight: bold;
+  margin-right: 30px;
+  font-size: 20px;
+}
+
+.connected {
+  display: flex;
+  align-items: center;
+}
 /* LOGIN MODAL */
 
 .modal {
@@ -70,6 +81,7 @@ p,
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 1000;
 }
 
 .modal-container {

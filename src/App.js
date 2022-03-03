@@ -6,6 +6,7 @@ import Home from "./pages/Home";
 import Restaurant from "./pages/Restaurant";
 import { useState } from "react";
 import { library } from "@fortawesome/fontawesome-svg-core";
+import Cookies from "js-cookie";
 import {
   faStar,
   faPhone,
@@ -28,11 +29,46 @@ library.add(
 
 function App() {
   const [show, setShow] = useState(false);
+  const [userToken, setUserToken] = useState(Cookies.get("userToken") || null);
+  const [data, setData] = useState();
+  const [usernameCookies, setUsernameCookies] = useState(
+    Cookies.get("username") || null
+  );
+
+  const setUser = (userToken) => {
+    if (userToken) {
+      Cookies.set("userToken", userToken, { expires: 30 });
+    } else {
+      Cookies.remove("userToken");
+    }
+    setUserToken(userToken);
+  };
+  const usernameStorage = (username) => {
+    if (username) {
+      Cookies.set("username", username, { expires: 30 });
+    } else {
+      Cookies.remove("username");
+    }
+    setUsernameCookies(username);
+  };
+
   return (
     <div className="app">
       <Router>
-        <Header setShow={setShow} />
-        <LoginModal show={show} setShow={setShow} />
+        <Header
+          setShow={setShow}
+          userToken={userToken}
+          setUser={setUser}
+          usernameCookies={usernameCookies}
+        />
+        <LoginModal
+          show={show}
+          setShow={setShow}
+          setUser={setUser}
+          data={data}
+          setData={setData}
+          usernameStorage={usernameStorage}
+        />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/restaurant/:name" element={<Restaurant />} />
