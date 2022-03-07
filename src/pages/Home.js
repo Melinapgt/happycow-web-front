@@ -7,9 +7,10 @@ import axios from "axios";
 import Hero from "../components/Hero";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const Home = () => {
+const Home = (props) => {
   const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState();
+  const { search, setSearch } = props;
 
   function getRandomInt(max) {
     return Math.floor(Math.random() * max);
@@ -17,25 +18,40 @@ const Home = () => {
 
   useEffect(() => {
     const getRestaurants = async () => {
-      const response = await axios.get("http://localhost:3000/");
-      console.log(response.data);
-      setData(response.data);
-      setIsLoading(false);
+      if (search) {
+        const response = await axios.get(
+          `http://localhost:3000/?search=${search}`
+        );
+        console.log(response.data);
+        setData(response.data);
+        setIsLoading(false);
+      } else {
+        const response = await axios.get("http://localhost:3000/");
+        console.log(response.data);
+        setData(response.data);
+        setIsLoading(false);
+      }
     };
     getRestaurants();
-  }, []);
+  }, [search]);
 
   return isLoading ? (
     <div>En cours de chargement ...</div>
   ) : (
     <div className="homepage">
-      <Hero />
+      <Hero setSearch={setSearch} />
       <div className="container">
         <section className="all-restaurants">
           <div className="caroussel-header">
             <h2> All Vegan Food Restaurants</h2>
             <Link to={"/restaurants/all"} className="link-all-restaurants">
-              <div>View all</div>
+              <div
+                onClick={() => {
+                  setSearch("");
+                }}
+              >
+                View all
+              </div>
               <span>
                 <FontAwesomeIcon icon="fa-solid fa-angle-right" />
               </span>

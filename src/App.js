@@ -39,6 +39,7 @@ function App() {
   const [usernameCookies, setUsernameCookies] = useState(
     Cookies.get("username") || null
   );
+  const [search, setSearch] = useState("");
 
   const setUser = (userToken) => {
     if (userToken) {
@@ -75,9 +76,15 @@ function App() {
           usernameStorage={usernameStorage}
         />
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route
+            path="/"
+            element={<Home search={search} setSearch={setSearch} />}
+          />
           <Route path="/restaurant/:name" element={<Restaurant />} />
-          <Route path="/restaurants/all" element={<AllRestaurants />} />
+          <Route
+            path="/restaurants/all"
+            element={<AllRestaurants search={search} setSearch={setSearch} />}
+          />
         </Routes>
         <Footer />
       </Router>
