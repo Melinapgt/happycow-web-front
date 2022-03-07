@@ -5,10 +5,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import GoogleMapReact from "google-map-react";
+import cow from "../assets/head.jpeg";
 
 const Restaurant = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [dataRestaurant, setDataRestaurant] = useState();
+  const [data, setData] = useState();
   const location = useLocation();
   const { placeId } = location.state;
   const RestaurantMarker = ({ text }) => <div className="marker">{text}</div>;
@@ -25,7 +26,7 @@ const Restaurant = () => {
         `http://localhost:3000/restaurant?placeId=${placeId}`
       );
       console.log("response restaurant==>", response.data);
-      setDataRestaurant(response.data);
+      setData(response.data);
       setIsLoading(false);
     };
     getRestaurant();
@@ -37,7 +38,7 @@ const Restaurant = () => {
     <div className="restaurant-page">
       <div className="banner">
         <div className="banner-container">
-          <h1>{dataRestaurant.name}</h1>
+          <h1>{data.restaurant.name}</h1>
         </div>
       </div>
       <div className="container">
@@ -54,22 +55,28 @@ const Restaurant = () => {
                 <FontAwesomeIcon icon="phone" />
               </span>
               <span> CONTACT</span>
-              <p>{dataRestaurant.phone}</p>
+              <p>{data.restaurant.phone}</p>
             </div>
             <div className="item-restaurant-infos">
               <span>
                 <FontAwesomeIcon icon="location-dot" />
               </span>
               <span> FIND</span>
-              <p>{dataRestaurant.address}</p>
+              <p>{data.restaurant.address}</p>
             </div>
           </div>
           <div className="bloc-text">
-            <p className="description">{dataRestaurant.description}</p>
+            <p className="description">{data.restaurant.description}</p>
+          </div>
+          <div className="photos-number">
+            <span>{data.restaurant.pictures.length} pictures</span>
+            <span>
+              <FontAwesomeIcon icon="fa-solid fa-camera" />
+            </span>
           </div>
 
           <div className="carrousel-restaurant-pictures">
-            {dataRestaurant.pictures.map((picture, index) => {
+            {data.restaurant.pictures.map((picture, index) => {
               return (
                 <div key={index}>
                   <div>
@@ -86,35 +93,56 @@ const Restaurant = () => {
             <div className="restaurant-map">
               <GoogleMapReact
                 bootstrapURLKeys={{ key: GOOGLE_API_KEY }}
-                defaultCenter={dataRestaurant.location}
+                defaultCenter={data.restaurant.location}
                 defaultZoom={11}
               >
                 <RestaurantMarker
-                  lat={dataRestaurant.location.lat}
-                  lng={dataRestaurant.location.lng}
+                  lat={data.restaurant.location.lat}
+                  lng={data.restaurant.location.lng}
                   text=""
                 />
               </GoogleMapReact>
             </div>
             <div className="bloc-text">
               {/* price  */}
-              {dataRestaurant.price !== null && <div></div>}
+              {data.restaurant.price !== null && <div></div>}
 
               <div className="websites">
                 <div>
                   <span>
                     <FontAwesomeIcon icon="link" />
                   </span>
-                  <a href={dataRestaurant.website}>website</a>
+                  <a href={data.restaurant.website}>website</a>
                 </div>
                 <div>
                   lien fb
-                  <a href={dataRestaurant.facebook}>facebook</a>
+                  <a href={data.restaurant.facebook}>facebook</a>
                 </div>
               </div>
             </div>
           </div>
-          <div className="aside-bloc2">liste resto proches</div>
+          <div className="aside-bloc2">
+            <h3>Nearby Listings</h3>
+            {data.nearbyRestaurants.map((nearbyRestaurant, index) => {
+              return (
+                <div key={nearbyRestaurant.placeId}>
+                  <div className="nearby-restaurant-card">
+                    {nearbyRestaurant.thumbnail ? (
+                      <img src={nearbyRestaurant.thumbnail} alt="" />
+                    ) : (
+                      <img src={cow} alt="" />
+                    )}
+
+                    <div>
+                      <p>{nearbyRestaurant.name}</p>
+                      <div>reviews</div>
+                      <div>{nearbyRestaurant.address}</div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
         </aside>
       </div>
     </div>

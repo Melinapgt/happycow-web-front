@@ -1,5 +1,4 @@
 import "../App.css";
-import burger from "../assets/burger.jpg";
 import muesli from "../assets/muesli.jpg";
 const Hero = () => {
   return (

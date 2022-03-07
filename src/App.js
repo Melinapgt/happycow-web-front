@@ -4,6 +4,7 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import Restaurant from "./pages/Restaurant";
+import AllRestaurants from "./pages/AllRestaurants";
 import { useState } from "react";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import Cookies from "js-cookie";
@@ -15,6 +16,8 @@ import {
   faLink,
   faMagnifyingGlass,
   faX,
+  faCamera,
+  faAngleRight,
 } from "@fortawesome/free-solid-svg-icons";
 import LoginModal from "./components/LoginModal";
 library.add(
@@ -24,7 +27,9 @@ library.add(
   faClock,
   faLink,
   faMagnifyingGlass,
-  faX
+  faX,
+  faCamera,
+  faAngleRight
 );
 
 function App() {
@@ -72,6 +77,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/restaurant/:name" element={<Restaurant />} />
+          <Route path="/restaurants/all" element={<AllRestaurants />} />
         </Routes>
         <Footer />
       </Router>

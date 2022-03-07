@@ -24,11 +24,30 @@ h1 {
   margin-left: 50px;
 }
 
+h2 {
+  font-size: 30px;
+  color: #494848;
+  font-weight: bold;
+}
+
+h3 {
+  color: #494848;
+  font-weight: bold;
+  font-size: 18px;
+}
+
 p,
-.homepage-description {
+.card-description {
   color: #5f5f5f;
   line-height: 25px;
   font-size: 14px;
+}
+
+a {
+  text-decoration: none;
+  /* color: #7c4ec4; */
+  color: white;
+  font-weight: bold;
 }
 
 .container {
@@ -36,8 +55,15 @@ p,
   margin: 0px auto;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   padding: 20px;
+}
+
+* {
+  -ms-overflow-style: none;
+}
+::-webkit-scrollbar {
+  display: none;
 }
 
 /* HEADER --------------------*/
@@ -252,16 +278,33 @@ p,
 
 .homepage .container {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
 }
-
+/* 
 .homepage .restaurants-section {
   display: flex;
   flex-wrap: wrap;
+} */
+
+.homepage section {
+  width: 98%;
+  margin-bottom: 30px;
 }
 
-.homepage .home-restaurant-card {
-  border: 2px solid red;
+.caroussel-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+}
+
+.restaurants-caroussel {
+  height: 400px;
+  display: flex;
+  overflow: hidden;
+  overflow-x: scroll;
+}
+
+.restaurant-card {
   width: 300px;
   height: 350px;
   display: flex;
@@ -295,7 +338,21 @@ p,
   text-decoration: none;
 }
 
+.link-all-restaurants {
+  color: #7c4ec4;
+  display: flex;
+}
+
+.link-all-restaurants div {
+  margin-right: 10px;
+}
+
 /* RESTAURANT PAGE-------------------- */
+
+/* .restaurant-page .container {
+  display: flex;
+  justify-content: flex-start;
+} */
 
 .banner {
   width: 100vw;
@@ -309,9 +366,9 @@ p,
   max-width: 1380px;
 }
 
-section {
+.restaurant-page section {
   padding: 5px;
-  border: 3px solid blue;
+  /* border: 3px solid blue; */
   width: 67%;
   display: flex;
   flex-direction: column;
@@ -334,9 +391,18 @@ aside {
   margin-bottom: 100px;
 }
 
-/* .aside-bloc2 {
+.aside-bloc2 .nearby-restaurant-card {
+  display: flex;
+  border: 1px solid #dbd9d9;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
 
-} */
+.nearby-restaurant-card img {
+  width: 30%;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
 
 section .bloc-text {
   display: flex;
@@ -367,6 +433,17 @@ section .bloc-text {
   margin-right: 20px;
 }
 
+.photos-number {
+  display: flex;
+  justify-content: flex-end;
+  padding: 20px;
+}
+
+.photos-number span {
+  margin-right: 5px;
+  color: #7c4ec4;
+}
+
 .restaurant-infos {
   display: flex;
   justify-content: center;
@@ -392,4 +469,48 @@ section .bloc-text {
 aside .bloc-text {
   padding: 10px;
   height: 230px;
+}
+
+.websites a {
+  color: black;
+}
+
+/* ALL RESTAURANTS PAGE-------------------- */
+
+.all-restaurants-page section {
+  border: 2px solid blue;
+}
+
+/* .all-restaurant-page .restaurant-card {
+  width: 100px;
+} */
+
+.all-restaurants-section {
+  width: 60%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.all-restaurants-map {
+  width: 30%;
+}
+
+/* FOOTER-------------------- */
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-top: 1px solid #7c4ec4;
+  background-color: #7c4ec4;
+  height: 80px;
+}
+
+.footer p {
+  margin-right: 5px;
+  color: white;
+}
+
+.footer span {
+  font-weight: bold;
 }
