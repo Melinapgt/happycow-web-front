@@ -47,6 +47,7 @@ function App() {
 
   // test envoi placeId en props pour le modal Review :
   const [placeIdReview, setPlaceIdReview] = useState();
+  const [nameReview, setNameReview] = useState();
 
   const setUser = (userToken) => {
     if (userToken) {
@@ -87,6 +88,7 @@ function App() {
           setShowReviewForm={setShowReviewForm}
           username={usernameCookies}
           placeIdReview={placeIdReview}
+          nameReview={nameReview}
         />
         <Routes>
           <Route
@@ -101,6 +103,7 @@ function App() {
                 setPlaceIdReview={setPlaceIdReview}
                 userToken={userToken}
                 setShow={setShow}
+                setNameReview={setNameReview}
               />
             }
           />

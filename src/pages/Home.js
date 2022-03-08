@@ -6,10 +6,12 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Hero from "../components/Hero";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import cow from "../assets/head.jpeg";
 
 const Home = (props) => {
   const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState();
+  const [dataReview, setDataReview] = useState();
   const { search, setSearch } = props;
 
   function getRandomInt(max) {
@@ -33,6 +35,14 @@ const Home = (props) => {
       }
     };
     getRestaurants();
+
+    const getReviews = async () => {
+      const response = await axios.get("http://localhost:3000/reviews");
+      console.log(response.data);
+      setDataReview(response.data);
+    };
+
+    getReviews();
   }, [search]);
 
   return isLoading ? (
@@ -182,7 +192,42 @@ const Home = (props) => {
             })}
           </div>
         </section>
-        <section></section>
+        <section className="home-review-section">
+          <div className="caroussel-header">
+            <h2>Latest reviews</h2>
+          </div>
+          <div className="reviews-caroussel">
+            {dataReview.map((review, index) => {
+              return (
+                <div key={review._id}>
+                  <div className="reviews-card">
+                    <div className="review-avatar">
+                      <img src={cow} alt="" />
+                      <div>
+                        <p className="username">{review.username}</p>
+                        <p>Wrote a review</p>
+                      </div>
+                    </div>
+
+                    <p className="review-title">{review.reviewTitle}</p>
+                    <p className="review-description">{review.review}</p>
+                    <div className="review-rating">
+                      <p>{review.name}</p>
+                      <StarRatings
+                        rating={review.rating}
+                        starRatedColor="#f7cc02"
+                        starDimension="17px"
+                        starSpacing="1px"
+                        numberOfStars={5}
+                        name="rating"
+                      />
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </section>
       </div>
     </div>
   );

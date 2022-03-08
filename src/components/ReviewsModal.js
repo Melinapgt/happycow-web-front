@@ -6,7 +6,13 @@ import axios from "axios";
 import cow from "../assets/head.jpeg";
 
 const ReviewsModal = (props) => {
-  const { showReviewForm, setShowReviewForm, username, placeIdReview } = props;
+  const {
+    showReviewForm,
+    setShowReviewForm,
+    username,
+    placeIdReview,
+    nameReview,
+  } = props;
   const [rating, setRating] = useState(0);
   const [reviewTitle, setReviewTitle] = useState("");
   const [review, setReview] = useState("");
@@ -15,6 +21,7 @@ const ReviewsModal = (props) => {
 
   const handleClickClose = () => {
     setShowReviewForm(false);
+    setSubmit(false);
   };
 
   const changeRating = (newRating) => {
@@ -32,12 +39,13 @@ const ReviewsModal = (props) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const response = await axios.post("http://localhost:3000/review", {
+    const response = await axios.post("http://localhost:3000/review/publish", {
       rating,
       review,
       reviewTitle,
       username,
       placeIdReview,
+      nameReview,
     });
     console.log("response review==>", response.data);
     setData(response.data);
