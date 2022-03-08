@@ -7,9 +7,11 @@ import { useEffect, useState } from "react";
 import GoogleMapReact from "google-map-react";
 import cow from "../assets/head.jpeg";
 
-const Restaurant = () => {
+const Restaurant = (props) => {
+  const { setShowReviewForm, setPlaceIdReview, userToken, setShow } = props;
   const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState();
+
   const location = useLocation();
   const { placeId } = location.state;
   const RestaurantMarker = ({ text }) => <div className="marker">{text}</div>;
@@ -31,6 +33,15 @@ const Restaurant = () => {
     };
     getRestaurant();
   }, [placeId]);
+
+  const handleClickAddReview = () => {
+    if (userToken) {
+      setShowReviewForm(true);
+      setPlaceIdReview(placeId);
+    } else {
+      setShow(true);
+    }
+  };
 
   return isLoading ? (
     <div>En cours de chargement ...</div>
@@ -68,11 +79,20 @@ const Restaurant = () => {
           <div className="bloc-text">
             <p className="description">{data.restaurant.description}</p>
           </div>
-          <div className="photos-number">
-            <span>{data.restaurant.pictures.length} pictures</span>
-            <span>
-              <FontAwesomeIcon icon="fa-solid fa-camera" />
-            </span>
+          <div className="restaurant-caroussel-header">
+            <button onClick={handleClickAddReview}>
+              {" "}
+              <span>
+                <FontAwesomeIcon icon="fa-solid fa-pen" />
+              </span>{" "}
+              Add Review
+            </button>
+            <div className="photos-number">
+              <span>{data.restaurant.pictures.length} pictures</span>
+              <span>
+                <FontAwesomeIcon icon="fa-solid fa-camera" />
+              </span>
+            </div>
           </div>
 
           <div className="carrousel-restaurant-pictures">

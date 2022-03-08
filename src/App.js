@@ -5,6 +5,7 @@ import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import Restaurant from "./pages/Restaurant";
 import AllRestaurants from "./pages/AllRestaurants";
+import ReviewsModal from "./components/ReviewsModal";
 import { useState } from "react";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import Cookies from "js-cookie";
@@ -18,6 +19,7 @@ import {
   faX,
   faCamera,
   faAngleRight,
+  faPen,
 } from "@fortawesome/free-solid-svg-icons";
 import LoginModal from "./components/LoginModal";
 library.add(
@@ -29,17 +31,22 @@ library.add(
   faMagnifyingGlass,
   faX,
   faCamera,
-  faAngleRight
+  faAngleRight,
+  faPen
 );
 
 function App() {
   const [show, setShow] = useState(false);
+  const [showReviewForm, setShowReviewForm] = useState(false);
   const [userToken, setUserToken] = useState(Cookies.get("userToken") || null);
   const [data, setData] = useState();
   const [usernameCookies, setUsernameCookies] = useState(
     Cookies.get("username") || null
   );
   const [search, setSearch] = useState("");
+
+  // test envoi placeId en props pour le modal Review :
+  const [placeIdReview, setPlaceIdReview] = useState();
 
   const setUser = (userToken) => {
     if (userToken) {
@@ -75,12 +82,28 @@ function App() {
           setData={setData}
           usernameStorage={usernameStorage}
         />
+        <ReviewsModal
+          showReviewForm={showReviewForm}
+          setShowReviewForm={setShowReviewForm}
+          username={usernameCookies}
+          placeIdReview={placeIdReview}
+        />
         <Routes>
           <Route
             path="/"
             element={<Home search={search} setSearch={setSearch} />}
           />
-          <Route path="/restaurant/:name" element={<Restaurant />} />
+          <Route
+            path="/restaurant/:name"
+            element={
+              <Restaurant
+                setShowReviewForm={setShowReviewForm}
+                setPlaceIdReview={setPlaceIdReview}
+                userToken={userToken}
+                setShow={setShow}
+              />
+            }
+          />
           <Route
             path="/restaurants/all"
             element={<AllRestaurants search={search} setSearch={setSearch} />}

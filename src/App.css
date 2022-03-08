@@ -95,6 +95,48 @@ a {
   display: flex;
   align-items: center;
 }
+
+/* MODAL REVIEW &  LOGIN MODAL */
+.modal-container {
+  background-color: #fff;
+  width: 800px;
+  display: flex;
+  border-radius: 10px;
+}
+
+.cross {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  cursor: pointer;
+  font-weight: bold;
+  color: #494848;
+  font-size: 20px;
+}
+
+.cross:hover {
+  color: #7c4ec4;
+}
+
+.welcome,
+.thankyou {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.welcome div,
+.thankyou div {
+  font-weight: bold;
+  color: #494848;
+  font-size: 20px;
+}
+
+.welcome img,
+.thankyou img {
+  width: 100px;
+}
+
 /* LOGIN MODAL */
 
 .modal {
@@ -108,13 +150,6 @@ a {
   align-items: center;
   justify-content: center;
   z-index: 1000;
-}
-
-.modal-container {
-  background-color: #fff;
-  width: 800px;
-  display: flex;
-  border-radius: 10px;
 }
 
 .modal-picture {
@@ -156,20 +191,6 @@ a {
   align-items: center;
   padding: 30px;
   position: relative;
-}
-
-.cross {
-  position: absolute;
-  top: 20px;
-  right: 30px;
-  cursor: pointer;
-  font-weight: bold;
-  color: #494848;
-  font-size: 20px;
-}
-
-.cross:hover {
-  color: #7c4ec4;
 }
 
 .modal-header {
@@ -222,20 +243,63 @@ a {
   width: 100%;
 }
 
-.welcome {
+/* MODAL REVIEW */
+
+.modal-review {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
   display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-review .modal-container {
   flex-direction: column;
   align-items: center;
+  padding: 20px;
 }
 
-.welcome div {
+.modal-review .modal-content {
+  position: relative;
+  width: 100%;
+}
+
+.modal-review form {
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+}
+
+.modal-review h2 {
+  margin-bottom: 30px;
+}
+
+.modal-review p {
   font-weight: bold;
-  color: #494848;
   font-size: 20px;
+  margin-bottom: 10px;
+  margin-top: 20px;
 }
 
-.welcome img {
-  width: 100px;
+.modal-review input,
+.modal-review textarea {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #b2b2b2;
+}
+
+.modal-review ::placeholder {
+  font-size: 18px;
+  color: #b2b2b2;
+}
+
+.modal-review button {
+  margin-top: 30px;
 }
 
 /* HERO */
@@ -433,10 +497,15 @@ section .bloc-text {
   margin-right: 20px;
 }
 
-.photos-number {
+.restaurant-caroussel-header {
   display: flex;
-  justify-content: flex-end;
-  padding: 20px;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 30px;
+}
+
+.restaurant-caroussel-header button {
+  padding: 10px;
 }
 
 .photos-number span {
