@@ -23,14 +23,14 @@ const Header = (props) => {
         <img src={logo} alt="" />
       </Link>
 
-      {location.pathname === "/" && (
+      {/* {location.pathname === "/" && (
         <div>
           <span>
             <FontAwesomeIcon icon="magnifying-glass" />
           </span>
           <input type="text" placeholder="Recherche" />
         </div>
-      )}
+      )} */}
 
       <div className="header-btn">
         {userToken ? (

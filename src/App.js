@@ -39,13 +39,12 @@ function App() {
   const [show, setShow] = useState(false);
   const [showReviewForm, setShowReviewForm] = useState(false);
   const [userToken, setUserToken] = useState(Cookies.get("userToken") || null);
-  const [data, setData] = useState();
   const [usernameCookies, setUsernameCookies] = useState(
     Cookies.get("username") || null
   );
   const [search, setSearch] = useState("");
 
-  // test envoi placeId en props pour le modal Review :
+  //  envoi placeId en props pour le modal Review :
   const [placeIdReview, setPlaceIdReview] = useState();
   const [nameReview, setNameReview] = useState();
 
@@ -79,8 +78,6 @@ function App() {
           show={show}
           setShow={setShow}
           setUser={setUser}
-          data={data}
-          setData={setData}
           usernameStorage={usernameStorage}
         />
         <ReviewsModal

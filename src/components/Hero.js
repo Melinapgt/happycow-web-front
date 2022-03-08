@@ -1,4 +1,3 @@
-import { useState } from "react";
 import "../App.css";
 import muesli from "../assets/muesli.jpg";
 const Hero = (props) => {

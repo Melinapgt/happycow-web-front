@@ -6,7 +6,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 
 const LoginModal = (props) => {
-  const { show, setShow, setUser, data, setData, usernameStorage } = props;
+  const { show, setShow, setUser, usernameStorage } = props;
+  const [data, setData] = useState();
   const [loginWindow, setLoginWindow] = useState(true);
   const [email, setEmail] = useState();
   const [username, setUsername] = useState();
@@ -33,38 +34,58 @@ const LoginModal = (props) => {
   const handleSubmitSignup = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post("http://localhost:3000/signup", {
-        email,
-        username,
-        password,
-      });
-      console.log(response.data);
-      console.log(response.status);
-      setData(response.data);
-      setUser(response.data.token);
-      usernameStorage(response.data.username);
-      if (response.status === 201) {
-        setCreated(true);
+      if (email && username && password) {
+        const response = await axios.post("http://localhost:3000/signup", {
+          email,
+          username,
+          password,
+        });
+        console.log(response.data);
+        console.log(response.status);
+
+        if (response.status === 201) {
+          setCreated(true);
+          setData(response.data);
+          setUser(response.data.token);
+          usernameStorage(response.data.username);
+        }
+      } else {
+        setMessage("Please fill in all fields ");
       }
     } catch (error) {
       console.log("error.response signup==>", error.response);
+      console.log(error.response.data.message);
+      if (error.response.status === 409) {
+        setMessage(error.response.data.message);
+      } else {
+        setMessage(
+          "error - please contact our customer service or try again later"
+        );
+      }
     }
   };
 
   const handleClickLoginBtn = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post("http://localhost:3000/login", {
-        email,
-        password,
-      });
-      console.log("response login==>", response.data);
-      setUser(response.data.token);
-      usernameStorage(response.data.username);
-      setData(response.data);
-      setShow(false);
+      if (email && password) {
+        const response = await axios.post("http://localhost:3000/login", {
+          email,
+          password,
+        });
+        console.log("response login==>", response.data);
+        setUser(response.data.token);
+        usernameStorage(response.data.username);
+        setData(response.data);
+        setShow(false);
+      } else {
+        setMessage("Please fill in all fields ");
+      }
     } catch (error) {
       console.log("error.response login==>", error.response);
+      if (error.response.status === 401) {
+        setMessage(error.response.data.message);
+      }
     }
   };
 
@@ -122,6 +143,7 @@ const LoginModal = (props) => {
                     setPassword(event.target.value);
                   }}
                 />
+                {message && <p className="error-message">{message}</p>}
                 <div className="modal-btn">
                   <button onClick={handleClickLoginBtn}>Login</button>
                 </div>
@@ -158,6 +180,7 @@ const LoginModal = (props) => {
                     setPassword(event.target.value);
                   }}
                 />
+                {message && <p className="error-message">{message}</p>}
                 <div className="modal-btn">
                   <button type="submit">Sign Up</button>
                 </div>

@@ -67,6 +67,10 @@ a {
   display: none;
 }
 
+.error-message {
+  color: red;
+}
+
 /* HEADER --------------------*/
 .header {
   /* border: 2px solid red; */
@@ -320,7 +324,9 @@ a {
 .hero-search {
   position: absolute;
   top: 140px;
-  left: 25vw;
+  /* left: 25vw; */
+  left: 0;
+  right: 0;
   color: white;
   font-size: 50px;
   font-weight: bold;
@@ -710,4 +716,53 @@ aside .bloc-text {
 
 .footer span {
   font-weight: bold;
+}
+
+/* RESPONSIVE ---------------------------------------------*/
+
+@media (min-width: 480px) {
+  .container {
+    border: 2px solid red;
+  }
+
+  h2 {
+    font-size: 20px;
+  }
+  /* HEADER & HERO -----------------*/
+  .hero-search input {
+    width: 400px;
+  }
+
+  .header img {
+    width: 150px;
+  }
+
+  /* HOME */
+
+  .restaurant-card,
+  .reviews-card {
+    margin-bottom: 10px;
+    border: 2px solid #2a8b42;
+  }
+
+  /* Restaurant */
+
+  .restaurant-page .container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .section-content {
+    width: 100%;
+  }
+
+  aside {
+    width: 100%;
+    margin-left: 0px;
+  }
+
+  /* MODAL */
+  .modal-picture {
+    display: none;
+  }
 }
