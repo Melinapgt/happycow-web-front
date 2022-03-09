@@ -2,6 +2,7 @@ import "../App.css";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import Hero from "../components/Hero";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import StarRatings from "react-star-ratings";
 // import LinesEllipsis from "react-lines-ellipsis";
 import { Link } from "react-router-dom";
@@ -55,16 +56,20 @@ const AllRestaurants = (props) => {
                   setPage(page - 1);
                 }}
               >
-                prev
+                <FontAwesomeIcon icon="fa-solid fa-chevron-left" />
               </button>
             )}
-
+            <div>
+              {page - 1 > 0 && <span className="prev">{page - 1}</span>}
+              <span className="current-page">{page}</span>
+              <span className="next">{page + 1}</span>
+            </div>
             <button
               onClick={() => {
                 setPage(page + 1);
               }}
             >
-              next
+              <FontAwesomeIcon icon="fa-solid fa-chevron-right" />
             </button>
           </div>
           <div className="all-restaurants-list">

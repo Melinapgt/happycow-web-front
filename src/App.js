@@ -20,6 +20,8 @@ import {
   faCamera,
   faAngleRight,
   faPen,
+  faChevronRight,
+  faChevronLeft,
 } from "@fortawesome/free-solid-svg-icons";
 import LoginModal from "./components/LoginModal";
 library.add(
@@ -32,7 +34,9 @@ library.add(
   faX,
   faCamera,
   faAngleRight,
-  faPen
+  faPen,
+  faChevronLeft,
+  faChevronRight
 );
 
 function App() {

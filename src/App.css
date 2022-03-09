@@ -684,6 +684,25 @@ aside .bloc-text {
   width: 30%;
 }
 
+.all-restaurants-page .restaurant-card {
+  border: 1px solid #eeeeee;
+  width: 200px;
+  height: 300px;
+  padding: 0px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+.all-restaurants-page .restaurant-card img {
+  width: 100%;
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+
+.all-restaurants-page .restaurant-name {
+  font-size: 18px;
+  margin-left: 5px;
+}
+
 .all-restaurants-list {
   display: flex;
   flex-wrap: wrap;
@@ -692,10 +711,31 @@ aside .bloc-text {
 
 .pages {
   margin: 30px 10px;
+  display: flex;
+  align-items: center;
+}
+
+.pages .prev,
+.pages .next {
+  background-color: #eeeeee;
+  color: #494848;
+  padding: 10px;
+  margin-right: 10px;
+}
+
+.pages .current-page {
+  background-color: #7c4ec4;
+  color: white;
+  font-size: bold;
+  padding: 10px;
+  margin-right: 10px;
 }
 
 .pages button {
   margin-right: 10px;
+  background-color: white;
+  color: #7c4ec4;
+  font-size: 30px;
 }
 
 /* FOOTER-------------------- */
@@ -720,10 +760,10 @@ aside .bloc-text {
 
 /* RESPONSIVE ---------------------------------------------*/
 
-@media (min-width: 480px) {
-  .container {
+@media (min-width: 480px) and (max-width: 1023px) {
+  /* .container {
     border: 2px solid red;
-  }
+  } */
 
   h2 {
     font-size: 20px;
@@ -765,4 +805,38 @@ aside .bloc-text {
   .modal-picture {
     display: none;
   }
+
+  .modal-content {
+    width: 100%;
+  }
+
+  /* ALL RESTAURANT */
+
+  .all-restaurants-page .container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .all-restaurants-section {
+    width: 100%;
+    order: 2;
+  }
+
+  .all-restaurants-map {
+    width: 100%;
+    order: 1;
+  }
+
+  .all-restaurants-page .restaurant-card {
+    height: 300px;
+    width: 300px;
+  }
+
+  /* .all-restaurants-list .restaurant-picture {
+    width: 100px;
+  } */
+}
+
+@media (min-width: 1024px) {
+  /* HEADER & HERO -----------------*/
 }
