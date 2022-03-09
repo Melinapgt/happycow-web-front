@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import Hero from "../components/Hero";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import StarRatings from "react-star-ratings";
-// import LinesEllipsis from "react-lines-ellipsis";
 import { Link } from "react-router-dom";
 // import GoogleMapReact from "google-map-react";
 
@@ -16,11 +15,12 @@ const AllRestaurants = (props) => {
   const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState();
   const [page, setPage] = useState(1);
+  // const [pageMax, setPageMax] = useState(false);
   const { search, setSearch } = props;
 
-  //   const GOOGLE_API_KEY = process.env.REACT_APP_GOOGLE_API_KEY;
-  //   const RestaurantMarker = ({ text }) => <div className="marker">{text}</div>;
-  //   const center = { lat: 48.856614, lng: 2.3522219 };
+  // const GOOGLE_API_KEY = process.env.REACT_APP_GOOGLE_API_KEY;
+  // const RestaurantMarker = ({ text }) => <div className="marker">{text}</div>;
+  // const center = { lat: 48.856614, lng: 2.3522219 };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -62,15 +62,17 @@ const AllRestaurants = (props) => {
             <div>
               {page - 1 > 0 && <span className="prev">{page - 1}</span>}
               <span className="current-page">{page}</span>
-              <span className="next">{page + 1}</span>
+              {data.length > 0 && <span className="next">{page + 1}</span>}
             </div>
-            <button
-              onClick={() => {
-                setPage(page + 1);
-              }}
-            >
-              <FontAwesomeIcon icon="fa-solid fa-chevron-right" />
-            </button>
+            {data.length > 0 && (
+              <button
+                onClick={() => {
+                  setPage(page + 1);
+                }}
+              >
+                <FontAwesomeIcon icon="fa-solid fa-chevron-right" />
+              </button>
+            )}
           </div>
           <div className="all-restaurants-list">
             {data.map((restaurant, index) => {
@@ -113,16 +115,6 @@ const AllRestaurants = (props) => {
                         />
                         <span> {getRandomInt(500)} reviews</span>
                       </div>
-
-                      {/* <div className="card-description">
-                      <LinesEllipsis
-                        text={description}
-                        maxLine="3"
-                        ellipsis="..."
-                        trimRight
-                        basedOn="letters"
-                      />
-                    </div> */}
                     </div>
                   </div>
                 </div>

@@ -22,6 +22,7 @@ import {
   faPen,
   faChevronRight,
   faChevronLeft,
+  faHeart,
 } from "@fortawesome/free-solid-svg-icons";
 import LoginModal from "./components/LoginModal";
 library.add(
@@ -36,7 +37,8 @@ library.add(
   faAngleRight,
   faPen,
   faChevronLeft,
-  faChevronRight
+  faChevronRight,
+  faHeart
 );
 
 function App() {
@@ -94,7 +96,13 @@ function App() {
         <Routes>
           <Route
             path="/"
-            element={<Home search={search} setSearch={setSearch} />}
+            element={
+              <Home
+                search={search}
+                setSearch={setSearch}
+                username={usernameCookies}
+              />
+            }
           />
           <Route
             path="/restaurant/:name"

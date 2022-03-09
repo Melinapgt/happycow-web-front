@@ -2,7 +2,7 @@ import "../App.css";
 import StarRatings from "react-star-ratings";
 import LinesEllipsis from "react-lines-ellipsis";
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import Hero from "../components/Hero";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -12,7 +12,15 @@ const Home = (props) => {
   const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState();
   const [dataReview, setDataReview] = useState();
-  const { search, setSearch } = props;
+  const [dataFavorites, setDataFavorites] = useState();
+  const [favorites, setFavorites] = useState(false);
+  const { search, setSearch, username } = props;
+
+  //test ref
+  const ref = useRef();
+  const scroll = (scrollOffeset) => {
+    ref.current.scrollLeft += scrollOffeset;
+  };
 
   function getRandomInt(max) {
     return Math.floor(Math.random() * max);
@@ -45,6 +53,24 @@ const Home = (props) => {
     getReviews();
   }, [search]);
 
+  const handleClickAddFavorite = async (name, placeId, thumbnail, rating) => {
+    try {
+      const response = await axios.post("http://localhost:3000/add/favorites", {
+        username,
+        placeId,
+        name,
+        thumbnail,
+        rating,
+      });
+      console.log(response.data);
+      if (response.status === 200) {
+        setFavorites(true);
+      }
+    } catch (error) {
+      console.log("error Favorite request Homepage==>", error.response);
+    }
+  };
+
   return isLoading ? (
     <div>En cours de chargement ...</div>
   ) : (
@@ -67,7 +93,7 @@ const Home = (props) => {
               </span>
             </Link>
           </div>
-
+          <button onClick={() => scroll(-50)}>left</button>
           <div className="restaurants-caroussel">
             {data.restaurants.map((restaurant, index) => {
               const description = JSON.stringify(restaurant.description);
@@ -76,6 +102,34 @@ const Home = (props) => {
                 <div key={restaurant.placeId}>
                   <div className="restaurants-section">
                     <div className="restaurant-card">
+                      <div
+                        className="favorite-btn"
+                        onClick={() =>
+                          handleClickAddFavorite(
+                            restaurant.name,
+                            restaurant.placeId,
+                            restaurant.thumbnail,
+                            restaurant.rating
+                          )
+                        }
+                      >
+                        <FontAwesomeIcon
+                          icon="fa-solid fa-heart"
+                          className="favorite"
+                        />
+                        {/* {favorites === true ? (
+                          <FontAwesomeIcon
+                            icon="fa-solid fa-heart"
+                            className="favorite-true"
+                          />
+                        ) : (
+                          <FontAwesomeIcon
+                            icon="fa-solid fa-heart"
+                            className="favorite-false"
+                          />
+                        )} */}
+                      </div>
+
                       <Link
                         className="link-restaurant"
                         to={`/restaurant/${restaurant.name}`}
@@ -126,6 +180,7 @@ const Home = (props) => {
               );
             })}
           </div>
+          <button onClick={() => scroll(50)}>right</button>
         </section>
 
         <section className="top-10">
