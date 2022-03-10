@@ -14,10 +14,16 @@ const Home = (props) => {
   const [dataReview, setDataReview] = useState();
   const { search, setSearch, username } = props;
 
-  //test ref
-  const ref = useRef();
+  //Scroll restaurants sur la home
+  const refHomeRestaurants = useRef(null);
   const scroll = (scrollOffeset) => {
-    ref.current.scrollLeft += scrollOffeset;
+    refHomeRestaurants.current.scrollLeft += scrollOffeset;
+  };
+
+  //Scroll top10 sur la home
+  const refHomeTop = useRef(null);
+  const scrollTop = (scrollOffeset) => {
+    refHomeTop.current.scrollLeft += scrollOffeset;
   };
 
   function getRandomInt(max) {
@@ -25,32 +31,40 @@ const Home = (props) => {
   }
 
   useEffect(() => {
-    const getRestaurants = async () => {
-      if (search) {
+    try {
+      const getRestaurants = async () => {
+        if (search) {
+          const response = await axios.get(
+            `https://happycow.herokuapp.com/?search=${search}`
+          );
+          console.log(response.data);
+          setData(response.data);
+          setIsLoading(false);
+        } else {
+          const response = await axios.get("https://happycow.herokuapp.com/");
+          console.log(response.data);
+          setData(response.data);
+          setIsLoading(false);
+        }
+      };
+      getRestaurants();
+    } catch (error) {
+      console.log("error getRestaurant Homepage==>", error.response);
+    }
+
+    try {
+      const getReviews = async () => {
         const response = await axios.get(
-          ` https://happycow.herokuapp.com/?search=${search}`
+          "https://happycow.herokuapp.com/reviews"
         );
         console.log(response.data);
-        setData(response.data);
-        setIsLoading(false);
-      } else {
-        const response = await axios.get(" https://happycow.herokuapp.com/");
-        console.log(response.data);
-        setData(response.data);
-        setIsLoading(false);
-      }
-    };
-    getRestaurants();
+        setDataReview(response.data);
+      };
 
-    const getReviews = async () => {
-      const response = await axios.get(
-        " https://happycow.herokuapp.com/reviews"
-      );
-      console.log(response.data);
-      setDataReview(response.data);
-    };
-
-    getReviews();
+      getReviews();
+    } catch (error) {
+      console.log("error getReviews Homepage==>", error.response);
+    }
   }, [search]);
 
   const handleClickAddFavorite = async (restaurantId) => {
@@ -90,24 +104,27 @@ const Home = (props) => {
               </span>
             </Link>
           </div>
-          <button onClick={() => scroll(-50)}>left</button>
-          <div className="restaurants-caroussel">
-            {data.restaurants.map((restaurant, index) => {
-              const description = JSON.stringify(restaurant.description);
+          <div className="scroll-bloc">
+            <button className="left-btn" onClick={() => scroll(-400)}>
+              <FontAwesomeIcon icon="fa-solid fa-chevron-left" />
+            </button>
+            <div ref={refHomeRestaurants} className="restaurants-caroussel">
+              {data.restaurants.map((restaurant, index) => {
+                const description = JSON.stringify(restaurant.description);
 
-              return (
-                <div key={restaurant.placeId}>
-                  <div className="restaurants-section">
-                    <div className="restaurant-card">
-                      <div
-                        className="favorite-btn"
-                        onClick={() => handleClickAddFavorite(restaurant._id)}
-                      >
-                        <FontAwesomeIcon
-                          icon="fa-solid fa-heart"
-                          className="favorite"
-                        />
-                        {/* {favorites === true ? (
+                return (
+                  <div key={restaurant.placeId}>
+                    <div className="restaurants-section">
+                      <div className="restaurant-card">
+                        <div
+                          className="favorite-btn"
+                          onClick={() => handleClickAddFavorite(restaurant._id)}
+                        >
+                          <FontAwesomeIcon
+                            icon="fa-solid fa-heart"
+                            className="favorite"
+                          />
+                          {/* {favorites === true ? (
                           <FontAwesomeIcon
                             icon="fa-solid fa-heart"
                             className="favorite-true"
@@ -118,123 +135,137 @@ const Home = (props) => {
                             className="favorite-false"
                           />
                         )} */}
-                      </div>
+                        </div>
 
-                      <Link
-                        className="link-restaurant"
-                        to={`/restaurant/${restaurant.name}`}
-                        state={{
-                          placeId: restaurant.placeId,
-                        }}
-                      >
-                        <img
-                          src={restaurant.thumbnail}
-                          alt="restaurant"
-                          className="restaurant-picture"
-                        />
-                      </Link>
-                      <Link
-                        className="link-restaurant"
-                        to={`/restaurant/${restaurant.name}`}
-                        state={{
-                          placeId: restaurant.placeId,
-                        }}
-                      >
-                        <div className="restaurant-name">{restaurant.name}</div>
-                      </Link>
+                        <Link
+                          className="link-restaurant"
+                          to={`/restaurant/${restaurant.name}`}
+                          state={{
+                            placeId: restaurant.placeId,
+                          }}
+                        >
+                          <img
+                            src={restaurant.thumbnail}
+                            alt="restaurant"
+                            className="restaurant-picture"
+                          />
+                        </Link>
+                        <Link
+                          className="link-restaurant"
+                          to={`/restaurant/${restaurant.name}`}
+                          state={{
+                            placeId: restaurant.placeId,
+                          }}
+                        >
+                          <div className="restaurant-name">
+                            {restaurant.name}
+                          </div>
+                        </Link>
 
-                      <div className="review-section">
-                        <StarRatings
-                          rating={restaurant.rating}
-                          starRatedColor="#f7cc02"
-                          starDimension="17px"
-                          starSpacing="1px"
-                          numberOfStars={5}
-                          name="rating"
-                        />
-                        <span> {getRandomInt(500)} reviews</span>
-                      </div>
-                      {/* <p className="restaurant-des">{restaurant.description}</p> */}
-                      <div className="card-description">
-                        <LinesEllipsis
-                          text={description}
-                          maxLine="3"
-                          ellipsis="..."
-                          trimRight
-                          basedOn="letters"
-                        />
+                        <div className="review-section">
+                          <StarRatings
+                            rating={restaurant.rating}
+                            starRatedColor="#f7cc02"
+                            starDimension="17px"
+                            starSpacing="1px"
+                            numberOfStars={5}
+                            name="rating"
+                          />
+                          <span> {getRandomInt(500)} reviews</span>
+                        </div>
+                        {/* <p className="restaurant-des">{restaurant.description}</p> */}
+                        <div className="card-description">
+                          <LinesEllipsis
+                            text={description}
+                            maxLine="3"
+                            ellipsis="..."
+                            trimRight
+                            basedOn="letters"
+                          />
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
+            <button className="right-btn" onClick={() => scroll(400)}>
+              <FontAwesomeIcon icon="fa-solid fa-chevron-right" />
+            </button>
           </div>
-          <button onClick={() => scroll(50)}>right</button>
         </section>
 
         <section className="top-10">
           <div className="caroussel-header">
             <h2> 10 Best Vegan Restaurants</h2>
-            <div>View all</div>
           </div>
-          <div className="restaurants-caroussel">
-            {data.ratingRestaurants.map((restaurant, index) => {
-              const description = JSON.stringify(restaurant.description);
+          <div className="scroll-bloc">
+            <button className="left-btn" onClick={() => scrollTop(-400)}>
+              <FontAwesomeIcon icon="fa-solid fa-chevron-left" />
+            </button>
+            <div ref={refHomeTop} className="restaurants-caroussel">
+              {data.ratingRestaurants.map((restaurant, index) => {
+                const description = JSON.stringify(restaurant.description);
 
-              return (
-                <div key={restaurant.placeId}>
-                  <div className="restaurants-section">
-                    <div className="restaurant-card">
-                      <Link
-                        className="link-restaurant"
-                        to={`/restaurant/${restaurant.name}`}
-                        state={{
-                          placeId: restaurant.placeId,
-                        }}
-                      >
-                        <img
-                          src={restaurant.thumbnail}
-                          alt="restaurant"
-                          className="restaurant-picture"
-                        />
-                      </Link>
-                      <Link
-                        className="link-restaurant"
-                        to={`/restaurant/${restaurant.name}`}
-                        state={{
-                          placeId: restaurant.placeId,
-                        }}
-                      >
-                        <div className="restaurant-name">{restaurant.name}</div>
-                      </Link>
+                return (
+                  <div key={restaurant.placeId}>
+                    <div className="restaurants-section">
+                      <div className="restaurant-card">
+                        <Link
+                          className="link-restaurant"
+                          to={`/restaurant/${restaurant.name}`}
+                          state={{
+                            placeId: restaurant.placeId,
+                          }}
+                        >
+                          <img
+                            src={restaurant.thumbnail}
+                            alt="restaurant"
+                            className="restaurant-picture"
+                          />
+                        </Link>
+                        <Link
+                          className="link-restaurant"
+                          to={`/restaurant/${restaurant.name}`}
+                          state={{
+                            placeId: restaurant.placeId,
+                          }}
+                        >
+                          <div className="restaurant-name">
+                            {restaurant.name}
+                          </div>
+                        </Link>
 
-                      <div className="review-section">
-                        <StarRatings
-                          rating={restaurant.rating}
-                          starRatedColor="#f7cc02"
-                          starDimension="17px"
-                          starSpacing="1px"
-                          numberOfStars={5}
-                          name="rating"
-                        />
-                        <span> {getRandomInt(500)} reviews</span>
-                      </div>
-                      {/* <p className="restaurant-des">{restaurant.description}</p> */}
-                      <div className="card-description">
-                        <LinesEllipsis
-                          text={description}
-                          maxLine="3"
-                          ellipsis="..."
-                          trimRight
-                          basedOn="letters"
-                        />
+                        <div className="review-section">
+                          <StarRatings
+                            rating={restaurant.rating}
+                            starRatedColor="#f7cc02"
+                            starDimension="17px"
+                            starSpacing="1px"
+                            numberOfStars={5}
+                            name="rating"
+                          />
+                          <span> {getRandomInt(500)} reviews</span>
+                        </div>
+                        {/* <p className="restaurant-des">{restaurant.description}</p> */}
+                        <div className="card-description">
+                          <LinesEllipsis
+                            text={description}
+                            maxLine="3"
+                            ellipsis="..."
+                            trimRight
+                            basedOn="letters"
+                          />
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
+            <button className="right-btn" onClick={() => scrollTop(400)}>
+              <FontAwesomeIcon icon="fa-solid fa-chevron-right" />
+            </button>
           </div>
         </section>
         <section className="home-review-section">

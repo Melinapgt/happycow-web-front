@@ -5,7 +5,8 @@ import Hero from "../components/Hero";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import StarRatings from "react-star-ratings";
 import { Link } from "react-router-dom";
-// import GoogleMapReact from "google-map-react";
+import GoogleMapReact from "google-map-react";
+import veganIcon from "../assets/Vegan.png";
 
 function getRandomInt(max) {
   return Math.floor(Math.random() * max);
@@ -15,12 +16,17 @@ const AllRestaurants = (props) => {
   const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState();
   const [page, setPage] = useState(1);
-  // const [pageMax, setPageMax] = useState(false);
   const { search, setSearch } = props;
 
-  // const GOOGLE_API_KEY = process.env.REACT_APP_GOOGLE_API_KEY;
-  // const RestaurantMarker = ({ text }) => <div className="marker">{text}</div>;
-  // const center = { lat: 48.856614, lng: 2.3522219 };
+  const GOOGLE_API_KEY = process.env.REACT_APP_GOOGLE_API_KEY;
+  const RestaurantMarker = ({ text }) => (
+    <div>
+      <img src={veganIcon} alt="" className="marker-all" />
+    </div>
+  );
+  const center = { lat: 48.856614, lng: 2.3522219 };
+  // Pour la page max : nombres de collections par le nombre de restaurants par page
+  const pageMax = 924 / 20;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -60,11 +66,29 @@ const AllRestaurants = (props) => {
               </button>
             )}
             <div>
-              {page - 1 > 0 && <span className="prev">{page - 1}</span>}
+              {page - 1 > 0 && (
+                <span
+                  className="prev"
+                  onClick={() => {
+                    setPage(page - 1);
+                  }}
+                >
+                  {page - 1}
+                </span>
+              )}
               <span className="current-page">{page}</span>
-              {data.length > 0 && <span className="next">{page + 1}</span>}
+              {page < Math.ceil(pageMax) && (
+                <span
+                  className="next"
+                  onClick={() => {
+                    setPage(page + 1);
+                  }}
+                >
+                  {page + 1}
+                </span>
+              )}
             </div>
-            {data.length - 1 > 0 && (
+            {page < Math.ceil(pageMax) && (
               <button
                 onClick={() => {
                   setPage(page + 1);
@@ -122,25 +146,23 @@ const AllRestaurants = (props) => {
             })}
           </div>
         </section>
-        <section className="all-restaurants-map">
-          {/* <GoogleMapReact
+        <section className="restaurants-map">
+          <GoogleMapReact
             bootstrapURLKeys={{ key: GOOGLE_API_KEY }}
             defaultCenter={center}
-            defaultZoom={11}
+            defaultZoom={13}
           >
             {data.map((restaurant, index) => {
               return (
-                <div key={restaurant.placeId}>
-                  <RestaurantMarker
-                    lat={restaurant.location.lat}
-                    lng={restaurant.location.lng}
-                    text=""
-                  />
-                  ;
-                </div>
+                <RestaurantMarker
+                  key={index}
+                  lat={restaurant.location.lat}
+                  lng={restaurant.location.lng}
+                  text=""
+                />
               );
             })}
-          </GoogleMapReact> */}
+          </GoogleMapReact>
           map
         </section>
       </div>

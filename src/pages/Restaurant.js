@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import GoogleMapReact from "google-map-react";
 import cow from "../assets/head.jpeg";
 import StarRatings from "react-star-ratings";
+import veganIcon from "../assets/Vegan.png";
 
 const Restaurant = (props) => {
   const {
@@ -24,7 +25,11 @@ const Restaurant = (props) => {
 
   const location = useLocation();
   const { placeId } = location.state;
-  const RestaurantMarker = ({ text }) => <div className="marker">{text}</div>;
+  const RestaurantMarker = ({ text }) => (
+    <div>
+      <img src={veganIcon} alt="" className="marker" />
+    </div>
+  );
 
   const GOOGLE_API_KEY = process.env.REACT_APP_GOOGLE_API_KEY;
 
