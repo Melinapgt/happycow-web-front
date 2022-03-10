@@ -46,26 +46,24 @@ const LoginModal = (props) => {
           }
         );
         console.log(response.data);
-        console.log(response.status);
 
-        if (response.status === 201) {
-          setCreated(true);
-          setData(response.data);
-          setUser(response.data.token);
-          usernameStorage(response.data.username);
-        }
+        setUser(response.data.token);
+        usernameStorage(response.data.username);
+        setData(response.data);
+        setCreated(true);
       } else {
         setMessage("Please fill in all fields ");
       }
     } catch (error) {
       console.log("error.response signup==>", error.response);
-      console.log(error.response.data.message);
-      if (error.response.status === 409) {
-        setMessage(error.response.data.message);
-      } else {
-        setMessage(
-          "error - please contact our customer service or try again later"
-        );
+      if (error.response) {
+        if (error.response.status === 409) {
+          setMessage(error.response.data.message);
+        } else {
+          setMessage(
+            "error - please contact our customer service or try again later"
+          );
+        }
       }
     }
   };
@@ -91,8 +89,10 @@ const LoginModal = (props) => {
       }
     } catch (error) {
       console.log("error.response login==>", error.response);
-      if (error.response.status === 401) {
-        setMessage(error.response.data.message);
+      if (error.response) {
+        if (error.response.status === 401) {
+          setMessage(error.response.data.message);
+        }
       }
     }
   };
