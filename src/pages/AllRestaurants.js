@@ -64,7 +64,7 @@ const AllRestaurants = (props) => {
               <span className="current-page">{page}</span>
               {data.length > 0 && <span className="next">{page + 1}</span>}
             </div>
-            {data.length > 0 && (
+            {data.length - 1 > 0 && (
               <button
                 onClick={() => {
                   setPage(page + 1);

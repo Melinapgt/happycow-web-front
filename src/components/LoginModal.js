@@ -17,6 +17,8 @@ const LoginModal = (props) => {
 
   const handleClickClose = () => {
     setShow(false);
+    setMessage("");
+    loginWindow(true);
   };
 
   const handleClickSignUpText = () => {
@@ -127,10 +129,10 @@ const LoginModal = (props) => {
             </div>
             {loginWindow ? (
               <form className="modal-form">
-                <p>Username or Email</p>
+                <p>Email</p>
                 <input
                   type="text"
-                  placeholder="Username or Email"
+                  placeholder="Email"
                   onChange={(event) => {
                     setEmail(event.target.value);
                   }}

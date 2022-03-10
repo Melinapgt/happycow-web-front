@@ -12,8 +12,6 @@ const Home = (props) => {
   const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState();
   const [dataReview, setDataReview] = useState();
-  const [dataFavorites, setDataFavorites] = useState();
-  const [favorites, setFavorites] = useState(false);
   const { search, setSearch, username } = props;
 
   //test ref
@@ -53,19 +51,13 @@ const Home = (props) => {
     getReviews();
   }, [search]);
 
-  const handleClickAddFavorite = async (name, placeId, thumbnail, rating) => {
+  const handleClickAddFavorite = async (restaurantId) => {
     try {
-      const response = await axios.post("http://localhost:3000/add/favorites", {
+      const response = await axios.post("http://localhost:3000/favorites", {
         username,
-        placeId,
-        name,
-        thumbnail,
-        rating,
+        restaurantId,
       });
-      console.log(response.data);
-      if (response.status === 200) {
-        setFavorites(true);
-      }
+      console.log("favorites==>", response.data);
     } catch (error) {
       console.log("error Favorite request Homepage==>", error.response);
     }
@@ -104,14 +96,7 @@ const Home = (props) => {
                     <div className="restaurant-card">
                       <div
                         className="favorite-btn"
-                        onClick={() =>
-                          handleClickAddFavorite(
-                            restaurant.name,
-                            restaurant.placeId,
-                            restaurant.thumbnail,
-                            restaurant.rating
-                          )
-                        }
+                        onClick={() => handleClickAddFavorite(restaurant._id)}
                       >
                         <FontAwesomeIcon
                           icon="fa-solid fa-heart"
