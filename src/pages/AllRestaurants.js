@@ -32,13 +32,13 @@ const AllRestaurants = (props) => {
     const fetchData = async () => {
       if (search) {
         const response = await axios.get(
-          ` https://happycow.herokuapp.com/restaurants/all?page=${page}&search=${search}`
+          `http://localhost:3000/restaurants/all?page=${page}&search=${search}`
         );
         console.log("response getSearchRestaurant==>", response.data);
         setData(response.data);
       } else {
         const response = await axios.get(
-          ` https://happycow.herokuapp.com/restaurants/all?page=${page}`
+          `http://localhost:3000/restaurants/all?page=${page}`
         );
         console.log("response all restaurants==>", response.data);
         setData(response.data);

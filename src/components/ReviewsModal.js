@@ -39,17 +39,14 @@ const ReviewsModal = (props) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const response = await axios.post(
-      " https://happycow.herokuapp.com/review/publish",
-      {
-        rating,
-        review,
-        reviewTitle,
-        username,
-        placeIdReview,
-        nameReview,
-      }
-    );
+    const response = await axios.post("http://localhost:3000/review/publish", {
+      rating,
+      review,
+      reviewTitle,
+      username,
+      placeIdReview,
+      nameReview,
+    });
     console.log("response review==>", response.data);
     setData(response.data);
     setSubmit(true);

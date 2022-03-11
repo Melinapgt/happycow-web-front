@@ -40,7 +40,7 @@ const Restaurant = (props) => {
   useEffect(() => {
     const getRestaurant = async () => {
       const response = await axios.get(
-        `https://happycow.herokuapp.com/restaurant?placeId=${placeId}`
+        `http://localhost:3000/restaurant?placeId=${placeId}`
       );
       console.log("response restaurant==>", response.data);
       setData(response.data);
@@ -50,7 +50,7 @@ const Restaurant = (props) => {
 
     const getReviews = async () => {
       const response = await axios.get(
-        `https://happycow.herokuapp.com/reviews/restaurant?placeId=${placeId}`
+        `http://localhost:3000/reviews/restaurant?placeId=${placeId}`
       );
       console.log("response getReview restaurant==>", response.data);
       // console.log(response.status);
@@ -236,6 +236,7 @@ const Restaurant = (props) => {
                         state={{
                           placeId: nearbyRestaurant.placeId,
                         }}
+                        // onClick={() => window.location.reload()}
                       >
                         <p>{nearbyRestaurant.name}</p>
                       </Link>

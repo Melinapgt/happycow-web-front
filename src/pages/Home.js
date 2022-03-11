@@ -35,13 +35,13 @@ const Home = (props) => {
       const getRestaurants = async () => {
         if (search) {
           const response = await axios.get(
-            `https://happycow.herokuapp.com/?search=${search}`
+            `http://localhost:3000/?search=${search}`
           );
           console.log(response.data);
           setData(response.data);
           setIsLoading(false);
         } else {
-          const response = await axios.get("https://happycow.herokuapp.com/");
+          const response = await axios.get("http://localhost:3000/");
           console.log(response.data);
           setData(response.data);
           setIsLoading(false);
@@ -54,9 +54,7 @@ const Home = (props) => {
 
     try {
       const getReviews = async () => {
-        const response = await axios.get(
-          "https://happycow.herokuapp.com/reviews"
-        );
+        const response = await axios.get("http://localhost:3000/reviews");
         console.log(response.data);
         setDataReview(response.data);
       };
@@ -69,13 +67,10 @@ const Home = (props) => {
 
   const handleClickAddFavorite = async (restaurantId) => {
     try {
-      const response = await axios.post(
-        " https://happycow.herokuapp.com/favorites",
-        {
-          username,
-          restaurantId,
-        }
-      );
+      const response = await axios.post("http://localhost:3000/favorites", {
+        username,
+        restaurantId,
+      });
       console.log("favorites==>", response.data);
     } catch (error) {
       console.log("error Favorite request Homepage==>", error.response);

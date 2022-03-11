@@ -123,7 +123,7 @@ function App() {
           />
           <Route
             path="/my-account"
-            element={<MyAccount username={usernameStorage} />}
+            element={<MyAccount username={usernameCookies} />}
           />
         </Routes>
         <Footer />

@@ -58,6 +58,7 @@ a {
   justify-content: center;
   align-items: flex-start;
   padding: 20px;
+  min-height: 80vh;
 }
 
 * {
@@ -542,7 +543,7 @@ a {
 }
 
 .banner-container {
-  border: 1px solid #7c4ec4;
+  /* border: 1px solid #7c4ec4; */
   margin: 0px auto;
   max-width: 1380px;
 }
@@ -813,6 +814,31 @@ aside .bloc-text {
   font-size: 30px;
 }
 
+/* MY ACCOUNT-------------------- */
+
+.account-page .container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.account-page h2 {
+  margin-top: 100px;
+}
+
+.account-page .favorites-section {
+  /* border: 2px solid blue; */
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
+  padding: 20px 0;
+}
+
+.favorite-card {
+  margin-right: 40px;
+}
+
 /* FOOTER-------------------- */
 
 .footer {
@@ -857,7 +883,6 @@ aside .bloc-text {
   .restaurant-card,
   .reviews-card {
     margin-bottom: 10px;
-    border: 2px solid #2a8b42;
   }
 
   /* Restaurant */

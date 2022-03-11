@@ -36,14 +36,11 @@ const LoginModal = (props) => {
     event.preventDefault();
     try {
       if (email && username && password) {
-        const response = await axios.post(
-          " https://happycow.herokuapp.com/signup",
-          {
-            email,
-            username,
-            password,
-          }
-        );
+        const response = await axios.post("http://localhost:3000/signup", {
+          email,
+          username,
+          password,
+        });
         console.log(response.data);
 
         setUser(response.data.token);
@@ -71,13 +68,10 @@ const LoginModal = (props) => {
     event.preventDefault();
     try {
       if (email && password) {
-        const response = await axios.post(
-          " https://happycow.herokuapp.com/login",
-          {
-            email,
-            password,
-          }
-        );
+        const response = await axios.post("http://localhost:3000/login", {
+          email,
+          password,
+        });
         console.log("response login==>", response.data);
         setUser(response.data.token);
         usernameStorage(response.data.username);
