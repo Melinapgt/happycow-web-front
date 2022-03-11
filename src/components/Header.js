@@ -3,14 +3,20 @@ import logo from "../assets/logo.gif";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useNavigate } from "react-router-dom";
 
 const Header = (props) => {
   const location = useLocation();
+  const navigate = useNavigate();
   const { setShow, setUser, userToken, usernameCookies } = props;
   // console.log(location);
 
   const handleClick = () => {
     setShow(true);
+  };
+
+  const handleClickAccount = () => {
+    navigate("/my-account");
   };
 
   const handleClickLogout = () => {
@@ -36,6 +42,7 @@ const Header = (props) => {
         {userToken ? (
           <div className="connected">
             <div className="welcome-back">Hi {usernameCookies} !</div>
+            <button onClick={handleClickAccount}>My Account</button>
             <button onClick={handleClickLogout}>Logout</button>
           </div>
         ) : (

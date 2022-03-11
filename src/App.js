@@ -6,6 +6,7 @@ import Home from "./pages/Home";
 import Restaurant from "./pages/Restaurant";
 import AllRestaurants from "./pages/AllRestaurants";
 import ReviewsModal from "./components/ReviewsModal";
+import MyAccount from "./pages/MyAccount";
 import { useState } from "react";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import Cookies from "js-cookie";
@@ -119,6 +120,10 @@ function App() {
           <Route
             path="/restaurants/all"
             element={<AllRestaurants search={search} setSearch={setSearch} />}
+          />
+          <Route
+            path="/my-account"
+            element={<MyAccount username={usernameStorage} />}
           />
         </Routes>
         <Footer />
