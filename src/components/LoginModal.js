@@ -18,7 +18,6 @@ const LoginModal = (props) => {
   const handleClickClose = () => {
     setShow(false);
     setMessage("");
-    loginWindow(true);
   };
 
   const handleClickSignUpText = () => {
