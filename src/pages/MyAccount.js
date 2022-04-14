@@ -5,14 +5,19 @@ import StarRatings from "react-star-ratings";
 import "../App.css";
 
 const MyAccount = (props) => {
+  //props
   const { username } = props;
+
+  //states
   const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState();
 
+  //paramétrage du nombre de reviews aléatoire
   function getRandomInt(max) {
     return Math.floor(Math.random() * max);
   }
 
+  //requête au chargement de la page pour récupérer les restaurants favoris de l'utilisateur
   useEffect(() => {
     try {
       const getUserAccount = async () => {

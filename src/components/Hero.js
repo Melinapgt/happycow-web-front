@@ -1,7 +1,10 @@
 import "../App.css";
 import muesli from "../assets/muesli.jpg";
 const Hero = (props) => {
+  //props
   const { setSearch } = props;
+
+  //barre de recherche
   const handleChange = (event) => {
     setSearch(event.target.value);
   };

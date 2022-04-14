@@ -1,8 +1,6 @@
 import "../App.css";
 import logo from "../assets/logo.gif";
 import { Link } from "react-router-dom";
-import { useLocation } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate } from "react-router-dom";
 
 const Header = (props) => {
@@ -10,7 +8,6 @@ const Header = (props) => {
   const { setShow, setUser, userToken, usernameCookies } = props;
 
   //hook settings
-  const location = useLocation();
   const navigate = useNavigate();
 
   // console.log(location);

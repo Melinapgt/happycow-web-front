@@ -6,6 +6,7 @@ import axios from "axios";
 import cow from "../assets/head.jpeg";
 
 const ReviewsModal = (props) => {
+  //props
   const {
     showReviewForm,
     setShowReviewForm,
@@ -13,6 +14,8 @@ const ReviewsModal = (props) => {
     placeIdReview,
     nameReview,
   } = props;
+
+  //states
   const [rating, setRating] = useState(0);
   const [reviewTitle, setReviewTitle] = useState("");
   const [review, setReview] = useState("");
@@ -36,6 +39,7 @@ const ReviewsModal = (props) => {
     setReview(event.target.value);
   };
 
+  //requête à la soumission du formulaire d'avis
   const handleSubmit = async (event) => {
     event.preventDefault();
 

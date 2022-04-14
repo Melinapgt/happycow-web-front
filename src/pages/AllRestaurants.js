@@ -140,7 +140,6 @@ const AllRestaurants = (props) => {
           </div>
           <div className="all-restaurants-list">
             {data.map((restaurant, index) => {
-              // const description = JSON.stringify(restaurant.description);
               return (
                 <div key={restaurant.placeId}>
                   <div className="restaurants-section">
@@ -149,6 +148,7 @@ const AllRestaurants = (props) => {
                         className="favorite-btn"
                         onClick={() => handleClickAddFavorite(restaurant._id)}
                       >
+                        {/* --> si l'id du restaurant est présent dans le tableau des favoris, alors l'icon est en rouge */}
                         {userFavorites ? (
                           <>
                             {" "}

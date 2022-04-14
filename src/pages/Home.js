@@ -143,6 +143,7 @@ const Home = (props) => {
                           className="favorite-btn"
                           onClick={() => handleClickAddFavorite(restaurant._id)}
                         >
+                          {/* --> si l'id du restaurant est présent dans le tableau des favoris, alors l'icon est en rouge */}
                           {userFavorites ? (
                             <>
                               {" "}
@@ -202,7 +203,6 @@ const Home = (props) => {
                           />
                           <span> {getRandomInt(500)} reviews</span>
                         </div>
-                        {/* <p className="restaurant-des">{restaurant.description}</p> */}
                         <div className="card-description">
                           <LinesEllipsis
                             text={description}
@@ -302,7 +302,6 @@ const Home = (props) => {
                           />
                           <span> {getRandomInt(500)} reviews</span>
                         </div>
-                        {/* <p className="restaurant-des">{restaurant.description}</p> */}
                         <div className="card-description">
                           <LinesEllipsis
                             text={description}

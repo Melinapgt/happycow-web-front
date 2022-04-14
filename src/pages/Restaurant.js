@@ -1,14 +1,14 @@
 import "../App.css";
 import { useLocation } from "react-router-dom";
-import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import GoogleMapReact from "google-map-react";
 import axios from "axios";
 import { useEffect, useState, useRef } from "react";
 import GoogleMapReact from "google-map-react";
 import cow from "../assets/head.jpeg";
 import StarRatings from "react-star-ratings";
 import veganIcon from "../assets/Vegan.png";
+// import { Link } from "react-router-dom";
+// import GoogleMapReact from "google-map-react";
 
 const Restaurant = (props) => {
   //props
@@ -49,7 +49,7 @@ const Restaurant = (props) => {
     refPicturesRestraurant.current.scrollLeft += scrollOffeset;
   };
 
-  //requête au chargement de la page
+  //requête au chargement de la page pour récupérer les restaurants et les avis
   useEffect(() => {
     const getRestaurant = async () => {
       const response = await axios.get(
@@ -237,9 +237,6 @@ const Restaurant = (props) => {
               </GoogleMapReact>
             </div>
             <div className="bloc-text">
-              {/* price  */}
-              {data.restaurant.price !== null && <div></div>}
-
               <div className="websites">
                 <div>
                   <span>
@@ -252,7 +249,7 @@ const Restaurant = (props) => {
                 </div>
                 <div>
                   <span className="fb-icon">
-                    <i class="devicon-facebook-plain"></i>
+                    <i className="devicon-facebook-plain"></i>
                   </span>
                   <a href={data.restaurant.facebook}>facebook</a>
                 </div>
