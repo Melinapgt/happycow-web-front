@@ -439,18 +439,18 @@ a {
 
 .favorite {
   font-size: 18px;
-  color: #5f5f5f;
+  color: red;
 }
 
-/* .favorite-false {
+.favorite-false {
   font-size: 18px;
   color: #5f5f5f;
 }
 
-.favorite-true {
+/* .favorite-true {
   font-size: 18px;
   color: red;
-} */
+}  */
 
 .restaurant-picture {
   width: 100%;

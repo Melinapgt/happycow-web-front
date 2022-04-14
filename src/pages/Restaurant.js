@@ -11,6 +11,7 @@ import StarRatings from "react-star-ratings";
 import veganIcon from "../assets/Vegan.png";
 
 const Restaurant = (props) => {
+  //props
   const {
     setShowReviewForm,
     setPlaceIdReview,
@@ -18,13 +19,18 @@ const Restaurant = (props) => {
     setShow,
     setNameReview,
   } = props;
+
+  //States
   const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState();
   const [dataReview, setDataReview] = useState();
   const [message, setMessage] = useState("");
 
+  //hook settings
   const location = useLocation();
   const { placeId } = location.state;
+
+  //map setting
   const RestaurantMarker = ({ text }) => (
     <div>
       <img src={veganIcon} alt="" className="marker" />
@@ -37,6 +43,7 @@ const Restaurant = (props) => {
   //   const restaurant = dataRestaurant.restaurant;
   //   console.log(restaurant);
 
+  //requête au chargement de la page
   useEffect(() => {
     const getRestaurant = async () => {
       const response = await axios.get(

@@ -9,10 +9,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import cow from "../assets/head.jpeg";
 
 const Home = (props) => {
+  //states
   const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState();
   const [dataReview, setDataReview] = useState();
-  const { search, setSearch, username } = props;
+  const [userFavorites, setUserFavorites] = useState();
+
+  //props
+  const { search, setSearch, username, userToken } = props;
 
   //Scroll restaurants sur la home
   const refHomeRestaurants = useRef(null);
@@ -26,11 +30,16 @@ const Home = (props) => {
     refHomeTop.current.scrollLeft += scrollOffeset;
   };
 
+  //setting nombre de review
   function getRandomInt(max) {
     return Math.floor(Math.random() * max);
   }
 
+  console.log("userAccount states==>", userFavorites);
+
+  //requête au chargement de la page
   useEffect(() => {
+    //requête pour les restaurants
     try {
       const getRestaurants = async () => {
         if (search) {
@@ -42,7 +51,7 @@ const Home = (props) => {
           setIsLoading(false);
         } else {
           const response = await axios.get("http://localhost:3000/");
-          console.log(response.data);
+          console.log("response data getRestaurant==>", response.data);
           setData(response.data);
           setIsLoading(false);
         }
@@ -51,7 +60,7 @@ const Home = (props) => {
     } catch (error) {
       console.log("error getRestaurant Homepage==>", error.response);
     }
-
+    //requête pour les reviews
     try {
       const getReviews = async () => {
         const response = await axios.get("http://localhost:3000/reviews");
@@ -63,7 +72,23 @@ const Home = (props) => {
     } catch (error) {
       console.log("error getReviews Homepage==>", error.response);
     }
-  }, [search]);
+    if (username) {
+      try {
+        const getUser = async () => {
+          const response = await axios.get(
+            `http://localhost:3000/my-account?username=${username}`
+          );
+          console.log("response userAccount home ==>", response.data);
+          setUserFavorites(response.data.userAccount.favorites);
+          console.log(
+            "response.data.userAccount ==>",
+            response.data.userAccount.favorites
+          );
+        };
+        getUser();
+      } catch (error) {}
+    }
+  }, [search, username]);
 
   const handleClickAddFavorite = async (restaurantId) => {
     try {
@@ -72,6 +97,7 @@ const Home = (props) => {
         restaurantId,
       });
       console.log("favorites==>", response.data);
+      setUserFavorites(response.data.favorites);
     } catch (error) {
       console.log("error Favorite request Homepage==>", error.response);
     }
@@ -115,21 +141,22 @@ const Home = (props) => {
                           className="favorite-btn"
                           onClick={() => handleClickAddFavorite(restaurant._id)}
                         >
-                          <FontAwesomeIcon
+                          {/* <FontAwesomeIcon
                             icon="fa-solid fa-heart"
                             className="favorite"
-                          />
-                          {/* {favorites === true ? (
-                          <FontAwesomeIcon
-                            icon="fa-solid fa-heart"
-                            className="favorite-true"
-                          />
-                        ) : (
-                          <FontAwesomeIcon
-                            icon="fa-solid fa-heart"
-                            className="favorite-false"
-                          />
-                        )} */}
+                          /> */}
+                          {userFavorites &&
+                          userFavorites.indexOf(restaurant._id) !== -1 ? (
+                            <FontAwesomeIcon
+                              icon="fa-solid fa-heart"
+                              className="favorite"
+                            />
+                          ) : (
+                            <FontAwesomeIcon
+                              icon="fa-solid fa-heart"
+                              className="favorite-false"
+                            />
+                          )}
                         </div>
 
                         <Link

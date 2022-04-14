@@ -102,6 +102,7 @@ function App() {
                 search={search}
                 setSearch={setSearch}
                 username={usernameCookies}
+                userToken={userToken}
               />
             }
           />

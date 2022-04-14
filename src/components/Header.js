@@ -6,9 +6,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate } from "react-router-dom";
 
 const Header = (props) => {
+  //props
+  const { setShow, setUser, userToken, usernameCookies } = props;
+
+  //hook settings
   const location = useLocation();
   const navigate = useNavigate();
-  const { setShow, setUser, userToken, usernameCookies } = props;
+
   // console.log(location);
 
   const handleClick = () => {
@@ -28,15 +32,6 @@ const Header = (props) => {
       <Link to="/">
         <img src={logo} alt="" />
       </Link>
-
-      {/* {location.pathname === "/" && (
-        <div>
-          <span>
-            <FontAwesomeIcon icon="magnifying-glass" />
-          </span>
-          <input type="text" placeholder="Recherche" />
-        </div>
-      )} */}
 
       <div className="header-btn">
         {userToken ? (

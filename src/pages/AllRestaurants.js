@@ -8,16 +8,21 @@ import { Link } from "react-router-dom";
 import GoogleMapReact from "google-map-react";
 import veganIcon from "../assets/Vegan.png";
 
-function getRandomInt(max) {
-  return Math.floor(Math.random() * max);
-}
-
 const AllRestaurants = (props) => {
+  //states
   const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState();
   const [page, setPage] = useState(1);
+
+  //props
   const { search, setSearch } = props;
 
+  //setting nombre de reviews
+  function getRandomInt(max) {
+    return Math.floor(Math.random() * max);
+  }
+
+  // map setting
   const GOOGLE_API_KEY = process.env.REACT_APP_GOOGLE_API_KEY;
   const RestaurantMarker = ({ text }) => (
     <div>
@@ -25,9 +30,11 @@ const AllRestaurants = (props) => {
     </div>
   );
   const center = { lat: 48.856614, lng: 2.3522219 };
+
   // Pour la page max : nombres de collections par le nombre de restaurants par page
   const pageMax = 924 / 20;
 
+  //requête au chargement de la page
   useEffect(() => {
     const fetchData = async () => {
       if (search) {
