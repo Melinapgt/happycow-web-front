@@ -219,10 +219,15 @@ const Restaurant = (props) => {
                   <span>
                     <FontAwesomeIcon icon="link" className="link-icon" />
                   </span>
-                  <a href={data.restaurant.website}>website</a>
+                  {/* <a href={data.restaurant.website}>website</a> */}
+                  <a href={data.restaurant.website}>
+                    {data.restaurant.website}
+                  </a>
                 </div>
                 <div>
-                  <i class="devicon-facebook-plain"></i>
+                  <span className="fb-icon">
+                    <i class="devicon-facebook-plain"></i>
+                  </span>
                   <a href={data.restaurant.facebook}>facebook</a>
                 </div>
               </div>
