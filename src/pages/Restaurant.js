@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import GoogleMapReact from "google-map-react";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import GoogleMapReact from "google-map-react";
 import cow from "../assets/head.jpeg";
 import StarRatings from "react-star-ratings";
@@ -42,6 +42,12 @@ const Restaurant = (props) => {
   //   console.log("placeId==>", placeId);
   //   const restaurant = dataRestaurant.restaurant;
   //   console.log(restaurant);
+
+  //Scroll photos restaurants
+  const refPicturesRestraurant = useRef(null);
+  const scrollPictures = (scrollOffeset) => {
+    refPicturesRestraurant.current.scrollLeft += scrollOffeset;
+  };
 
   //requête au chargement de la page
   useEffect(() => {
@@ -81,10 +87,6 @@ const Restaurant = (props) => {
     }
   };
 
-  const refreshPage = () => {
-    window.location.reload();
-  };
-
   return isLoading ? (
     <div>En cours de chargement ...</div>
   ) : (
@@ -100,23 +102,36 @@ const Restaurant = (props) => {
             <div className="restaurant-infos">
               <div className="item-restaurant-infos">
                 <span>
-                  <FontAwesomeIcon icon="clock" />
+                  <FontAwesomeIcon
+                    icon="clock"
+                    className="restaurant-infos--icon"
+                  />
                 </span>
                 <span>OPENING HOURS</span>
               </div>
               <div className="item-restaurant-infos">
-                <span>
-                  <FontAwesomeIcon icon="phone" />
-                </span>
-                <span> CONTACT</span>
-                <p>{data.restaurant.phone}</p>
+                <div>
+                  <FontAwesomeIcon
+                    icon="phone"
+                    className="restaurant-infos--icon"
+                  />
+                </div>
+                <div>
+                  <div> CONTACT</div>
+                  <p>{data.restaurant.phone}</p>
+                </div>
               </div>
               <div className="item-restaurant-infos">
-                <span>
-                  <FontAwesomeIcon icon="location-dot" />
-                </span>
-                <span> FIND</span>
-                <p>{data.restaurant.address}</p>
+                <div>
+                  <FontAwesomeIcon
+                    icon="location-dot"
+                    className="restaurant-infos--icon"
+                  />
+                </div>
+                <div>
+                  <span> FIND</span>
+                  <p>{data.restaurant.address}</p>
+                </div>
               </div>
             </div>
             <div className="bloc-text">
@@ -137,17 +152,28 @@ const Restaurant = (props) => {
                 </span>
               </div>
             </div>
-
-            <div className="caroussel-restaurant-pictures">
-              {data.restaurant.pictures.map((picture, index) => {
-                return (
-                  <div key={index}>
-                    <div>
-                      <img src={picture} alt="" />
+            <div className="scroll-bloc">
+              <button className="left-btn" onClick={() => scrollPictures(-400)}>
+                {" "}
+                <FontAwesomeIcon icon="fa-solid fa-chevron-left" />
+              </button>
+              <div
+                ref={refPicturesRestraurant}
+                className="caroussel-restaurant-pictures"
+              >
+                {data.restaurant.pictures.map((picture, index) => {
+                  return (
+                    <div key={index}>
+                      <div>
+                        <img src={picture} alt="" />
+                      </div>
                     </div>
-                  </div>
-                );
-              })}
+                  );
+                })}
+              </div>
+              <button className="right-btn" onClick={() => scrollPictures(400)}>
+                <FontAwesomeIcon icon="fa-solid fa-chevron-right" />
+              </button>
             </div>
           </section>
           <section className="section-reviews">

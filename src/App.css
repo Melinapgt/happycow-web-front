@@ -551,12 +551,15 @@ a {
   width: 100vw;
   background-color: #2a8b42;
   height: 80px;
+  display: flex;
+  align-items: center;
 }
 
 .banner-container {
   /* border: 1px solid #7c4ec4; */
   margin: 0px auto;
   max-width: 1380px;
+  flex: 1;
 }
 
 .section-content {
@@ -574,6 +577,29 @@ a {
   padding: 5px;
   display: flex;
   flex-direction: column;
+}
+
+.restaurant-infos--icon {
+  color: #5f5f5f;
+  font-size: 25px;
+  margin-right: 20px;
+}
+
+.item-restaurant-infos {
+  display: flex;
+  align-items: flex-start;
+}
+
+.item-restaurant-infos p {
+  max-width: 200px;
+}
+
+.restaurant-page .left-btn {
+  left: 12px;
+}
+
+.restaurant-page .right-btn {
+  right: 10px;
 }
 
 section:not(.carrousel-restaurant-pictures img) {
@@ -648,6 +674,7 @@ aside {
 .aside-bloc1 {
   background-color: #fafafa;
   margin-bottom: 50px;
+  box-shadow: 5px 5px 15px rgba(95, 95, 95, 0.3);
 }
 
 .aside-bloc2 .nearby-restaurant-card {
@@ -681,6 +708,7 @@ section .bloc-text {
   display: flex;
   overflow: hidden;
   overflow-x: scroll;
+  scroll-behavior: smooth;
   margin: 0 auto;
 }
 
@@ -726,10 +754,6 @@ section .bloc-text {
 
 .marker {
   width: 30px;
-}
-
-.aside-bloc1 {
-  box-shadow: 5px 5px 15px rgba(95, 95, 95, 0.3);
 }
 
 aside .bloc-text {
