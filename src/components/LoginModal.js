@@ -131,7 +131,7 @@ const LoginModal = (props) => {
                 </>
               )}
             </div>
-            {/* formulaire de connexion ---------*/}
+            {/* formulaire de connexion et formulaire d'inscription---------*/}
             {loginWindow ? (
               <form className="modal-form">
                 <p>Email</p>
@@ -162,40 +162,37 @@ const LoginModal = (props) => {
                 <p>{data.message}</p>
               </div>
             ) : (
-              {
-                /* formulaire de d'inscription ---------*/
-              }(
-                <form onSubmit={handleSubmitSignup} className="modal-form">
-                  <p>Email</p>
-                  <input
-                    type="text"
-                    placeholder="Email"
-                    onChange={(event) => {
-                      setEmail(event.target.value);
-                    }}
-                  />
-                  <p>Username</p>
-                  <input
-                    type="text"
-                    placeholder="Username"
-                    onChange={(event) => {
-                      setUsername(event.target.value);
-                    }}
-                  />
-                  <p>Password</p>
-                  <input
-                    type="text"
-                    placeholder="Password"
-                    onChange={(event) => {
-                      setPassword(event.target.value);
-                    }}
-                  />
-                  {message && <p className="error-message">{message}</p>}
-                  <div className="modal-btn">
-                    <button type="submit">Sign Up</button>
-                  </div>
-                </form>
-              )
+              <form onSubmit={handleSubmitSignup} className="modal-form">
+                <p>Email</p>
+                <input
+                  type="text"
+                  placeholder="Email"
+                  onChange={(event) => {
+                    setEmail(event.target.value);
+                  }}
+                />
+                <p>Username</p>
+                <input
+                  type="text"
+                  placeholder="Username"
+                  onChange={(event) => {
+                    setUsername(event.target.value);
+                  }}
+                />
+                <p>Password</p>
+                <input
+                  type="password"
+                  placeholder="Password"
+                  security={true}
+                  onChange={(event) => {
+                    setPassword(event.target.value);
+                  }}
+                />
+                {message && <p className="error-message">{message}</p>}
+                <div className="modal-btn">
+                  <button type="submit">Sign Up</button>
+                </div>
+              </form>
             )}
           </div>
         </div>
