@@ -502,6 +502,15 @@ a {
   border-radius: 50%;
   margin-right: 10px;
 }
+
+.home-review-section .scroll-bloc {
+  padding: 0px 30px;
+}
+
+.home-review-section .left-btn {
+  left: 0px;
+}
+
 /* 
 .reviews-caroussel {
   border: 1px solid #2a8b42;

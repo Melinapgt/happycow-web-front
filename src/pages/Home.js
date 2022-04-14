@@ -30,6 +30,12 @@ const Home = (props) => {
     refHomeTop.current.scrollLeft += scrollOffeset;
   };
 
+  //Scroll review
+  const refReviews = useRef(null);
+  const scrollReviews = (scrollOffeset) => {
+    refReviews.current.scrollLeft += scrollOffeset;
+  };
+
   //setting nombre de review
   function getRandomInt(max) {
     return Math.floor(Math.random() * max);
@@ -321,37 +327,46 @@ const Home = (props) => {
           <div className="caroussel-header">
             <h2>Latest reviews</h2>
           </div>
-          <div className="reviews-caroussel">
-            {dataReview &&
-              dataReview.map((review, index) => {
-                return (
-                  <div key={review._id}>
-                    <div className="reviews-card">
-                      <div className="review-avatar">
-                        <img src={cow} alt="" />
-                        <div>
-                          <p className="username">{review.username}</p>
-                          <p>Wrote a review</p>
+          <div className="scroll-bloc">
+            <button className="left-btn" onClick={() => scrollReviews(-400)}>
+              {" "}
+              <FontAwesomeIcon icon="fa-solid fa-chevron-left" />
+            </button>
+            <div ref={refReviews} className="reviews-caroussel">
+              {dataReview &&
+                dataReview.map((review, index) => {
+                  return (
+                    <div key={review._id}>
+                      <div className="reviews-card">
+                        <div className="review-avatar">
+                          <img src={cow} alt="" />
+                          <div>
+                            <p className="username">{review.username}</p>
+                            <p>Wrote a review</p>
+                          </div>
+                        </div>
+
+                        <p className="review-title">{review.reviewTitle}</p>
+                        <p className="review-description">{review.review}</p>
+                        <div className="review-rating">
+                          <p>{review.name}</p>
+                          <StarRatings
+                            rating={review.rating}
+                            starRatedColor="#f7cc02"
+                            starDimension="17px"
+                            starSpacing="1px"
+                            numberOfStars={5}
+                            name="rating"
+                          />
                         </div>
                       </div>
-
-                      <p className="review-title">{review.reviewTitle}</p>
-                      <p className="review-description">{review.review}</p>
-                      <div className="review-rating">
-                        <p>{review.name}</p>
-                        <StarRatings
-                          rating={review.rating}
-                          starRatedColor="#f7cc02"
-                          starDimension="17px"
-                          starSpacing="1px"
-                          numberOfStars={5}
-                          name="rating"
-                        />
-                      </div>
                     </div>
-                  </div>
-                );
-              })}
+                  );
+                })}
+            </div>
+            <button className="right-btn" onClick={() => scrollReviews(400)}>
+              <FontAwesomeIcon icon="fa-solid fa-chevron-right" />
+            </button>
           </div>
         </section>
       </div>
