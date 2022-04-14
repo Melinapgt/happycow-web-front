@@ -15,7 +15,8 @@ const AllRestaurants = (props) => {
   const [page, setPage] = useState(1);
 
   //props
-  const { search, setSearch } = props;
+  const { search, setSearch, userFavorites, setUserFavorites, username } =
+    props;
 
   //setting nombre de reviews
   function getRandomInt(max) {
@@ -36,24 +37,56 @@ const AllRestaurants = (props) => {
 
   //requête au chargement de la page
   useEffect(() => {
-    const fetchData = async () => {
-      if (search) {
-        const response = await axios.get(
-          `http://localhost:3000/restaurants/all?page=${page}&search=${search}`
-        );
-        console.log("response getSearchRestaurant==>", response.data);
-        setData(response.data);
-      } else {
-        const response = await axios.get(
-          `http://localhost:3000/restaurants/all?page=${page}`
-        );
-        console.log("response all restaurants==>", response.data);
-        setData(response.data);
-        setIsLoading(false);
+    try {
+      const getAllrestaurants = async () => {
+        if (search) {
+          const response = await axios.get(
+            `http://localhost:3000/restaurants/all?page=${page}&search=${search}`
+          );
+          console.log("response getSearchRestaurant==>", response.data);
+          setData(response.data);
+        } else {
+          const response = await axios.get(
+            `http://localhost:3000/restaurants/all?page=${page}`
+          );
+          console.log("response all restaurants==>", response.data);
+          setData(response.data);
+          setIsLoading(false);
+        }
+      };
+      getAllrestaurants();
+    } catch (error) {
+      console.log("error getUser==>", error.response);
+    }
+
+    if (username) {
+      try {
+        const getUser = async () => {
+          const response = await axios.get(
+            `http://localhost:3000/my-account?username=${username}`
+          );
+          console.log("response userAccount home ==>", response.data);
+          setUserFavorites(response.data.userAccount.favorites);
+        };
+        getUser();
+      } catch (error) {
+        console.log("error getUser==>", error.response);
       }
-    };
-    fetchData();
-  }, [page, search]);
+    }
+  }, [page, search, username, setUserFavorites]);
+
+  const handleClickAddFavorite = async (restaurantId) => {
+    try {
+      const response = await axios.post("http://localhost:3000/favorites", {
+        username,
+        restaurantId,
+      });
+      console.log("favorites==>", response.data);
+      setUserFavorites(response.data.favorites);
+    } catch (error) {
+      console.log("error Favorite request Homepage==>", error.response);
+    }
+  };
 
   return isLoading ? (
     <div>En cours de chargement</div>
@@ -112,6 +145,32 @@ const AllRestaurants = (props) => {
                 <div key={restaurant.placeId}>
                   <div className="restaurants-section">
                     <div className="restaurant-card">
+                      <div
+                        className="favorite-btn"
+                        onClick={() => handleClickAddFavorite(restaurant._id)}
+                      >
+                        {userFavorites ? (
+                          <>
+                            {" "}
+                            {userFavorites.indexOf(restaurant._id) !== -1 ? (
+                              <FontAwesomeIcon
+                                icon="fa-solid fa-heart"
+                                className="favorite"
+                              />
+                            ) : (
+                              <FontAwesomeIcon
+                                icon="fa-solid fa-heart"
+                                className="favorite-false"
+                              />
+                            )}
+                          </>
+                        ) : (
+                          <FontAwesomeIcon
+                            icon="fa-solid fa-heart"
+                            className="favorite-false"
+                          />
+                        )}
+                      </div>
                       <Link
                         className="link-restaurant"
                         to={`/restaurant/${restaurant.name}`}

@@ -1,4 +1,4 @@
-/* Other rules */
+/* Global rules */
 .app {
   max-width: 1920px;
   font-family: "Nunito", sans-serif;
@@ -70,6 +70,11 @@ a {
 
 .error-message {
   color: red;
+}
+
+.link-icon {
+  color: #7c4ec4;
+  margin-right: 30px;
 }
 
 /* HEADER --------------------*/
@@ -419,7 +424,7 @@ a {
   padding: 10px;
 }
 
-.homepage .restaurant-card {
+.restaurant-card {
   position: relative;
 }
 

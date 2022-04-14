@@ -43,6 +43,7 @@ library.add(
 );
 
 function App() {
+  //states
   const [show, setShow] = useState(false);
   const [showReviewForm, setShowReviewForm] = useState(false);
   const [userToken, setUserToken] = useState(Cookies.get("userToken") || null);
@@ -50,11 +51,13 @@ function App() {
     Cookies.get("username") || null
   );
   const [search, setSearch] = useState("");
+  const [userFavorites, setUserFavorites] = useState();
 
   //  envoi placeId en props pour le modal Review :
   const [placeIdReview, setPlaceIdReview] = useState();
   const [nameReview, setNameReview] = useState();
 
+  //Cookies settings
   const setUser = (userToken) => {
     if (userToken) {
       Cookies.set("userToken", userToken, { expires: 30 });
@@ -102,7 +105,8 @@ function App() {
                 search={search}
                 setSearch={setSearch}
                 username={usernameCookies}
-                userToken={userToken}
+                userFavorites={userFavorites}
+                setUserFavorites={setUserFavorites}
               />
             }
           />
@@ -120,7 +124,15 @@ function App() {
           />
           <Route
             path="/restaurants/all"
-            element={<AllRestaurants search={search} setSearch={setSearch} />}
+            element={
+              <AllRestaurants
+                search={search}
+                setSearch={setSearch}
+                userFavorites={userFavorites}
+                setUserFavorites={setUserFavorites}
+                username={usernameCookies}
+              />
+            }
           />
           <Route
             path="/my-account"

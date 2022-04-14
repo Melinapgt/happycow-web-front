@@ -81,6 +81,10 @@ const Restaurant = (props) => {
     }
   };
 
+  const refreshPage = () => {
+    window.location.reload();
+  };
+
   return isLoading ? (
     <div>En cours de chargement ...</div>
   ) : (
@@ -213,12 +217,12 @@ const Restaurant = (props) => {
               <div className="websites">
                 <div>
                   <span>
-                    <FontAwesomeIcon icon="link" />
+                    <FontAwesomeIcon icon="link" className="link-icon" />
                   </span>
                   <a href={data.restaurant.website}>website</a>
                 </div>
                 <div>
-                  lien fb
+                  <i class="devicon-facebook-plain"></i>
                   <a href={data.restaurant.facebook}>facebook</a>
                 </div>
               </div>
@@ -237,16 +241,16 @@ const Restaurant = (props) => {
                     )}
 
                     <div>
-                      <Link
+                      {/* <Link
                         className="link-restaurant"
                         to={`/restaurant/${nearbyRestaurant.name}`}
                         state={{
                           placeId: nearbyRestaurant.placeId,
                         }}
-                        // onClick={() => window.location.reload()}
-                      >
-                        <p>{nearbyRestaurant.name}</p>
-                      </Link>
+                        // onClick={refreshPage}
+                      > */}
+                      <p>{nearbyRestaurant.name}</p>
+                      {/* </Link> */}
                       <div>
                         <StarRatings
                           rating={nearbyRestaurant.rating}

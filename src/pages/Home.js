@@ -13,10 +13,10 @@ const Home = (props) => {
   const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState();
   const [dataReview, setDataReview] = useState();
-  const [userFavorites, setUserFavorites] = useState();
 
   //props
-  const { search, setSearch, username, userToken } = props;
+  const { search, setSearch, username, userFavorites, setUserFavorites } =
+    props;
 
   //Scroll restaurants sur la home
   const refHomeRestaurants = useRef(null);
@@ -35,8 +35,6 @@ const Home = (props) => {
     return Math.floor(Math.random() * max);
   }
 
-  console.log("userAccount states==>", userFavorites);
-
   //requête au chargement de la page
   useEffect(() => {
     //requête pour les restaurants
@@ -46,7 +44,7 @@ const Home = (props) => {
           const response = await axios.get(
             `http://localhost:3000/?search=${search}`
           );
-          console.log(response.data);
+          console.log("response.data getRestaurants==>", response.data);
           setData(response.data);
           setIsLoading(false);
         } else {
@@ -64,7 +62,7 @@ const Home = (props) => {
     try {
       const getReviews = async () => {
         const response = await axios.get("http://localhost:3000/reviews");
-        console.log(response.data);
+        console.log("response.data getReviews==>", response.data);
         setDataReview(response.data);
       };
 
@@ -80,15 +78,13 @@ const Home = (props) => {
           );
           console.log("response userAccount home ==>", response.data);
           setUserFavorites(response.data.userAccount.favorites);
-          console.log(
-            "response.data.userAccount ==>",
-            response.data.userAccount.favorites
-          );
         };
         getUser();
-      } catch (error) {}
+      } catch (error) {
+        console.log("error getUser==>", error.response);
+      }
     }
-  }, [search, username]);
+  }, [search, username, setUserFavorites]);
 
   const handleClickAddFavorite = async (restaurantId) => {
     try {
@@ -141,16 +137,21 @@ const Home = (props) => {
                           className="favorite-btn"
                           onClick={() => handleClickAddFavorite(restaurant._id)}
                         >
-                          {/* <FontAwesomeIcon
-                            icon="fa-solid fa-heart"
-                            className="favorite"
-                          /> */}
-                          {userFavorites &&
-                          userFavorites.indexOf(restaurant._id) !== -1 ? (
-                            <FontAwesomeIcon
-                              icon="fa-solid fa-heart"
-                              className="favorite"
-                            />
+                          {userFavorites ? (
+                            <>
+                              {" "}
+                              {userFavorites.indexOf(restaurant._id) !== -1 ? (
+                                <FontAwesomeIcon
+                                  icon="fa-solid fa-heart"
+                                  className="favorite"
+                                />
+                              ) : (
+                                <FontAwesomeIcon
+                                  icon="fa-solid fa-heart"
+                                  className="favorite-false"
+                                />
+                              )}
+                            </>
                           ) : (
                             <FontAwesomeIcon
                               icon="fa-solid fa-heart"
@@ -233,6 +234,32 @@ const Home = (props) => {
                   <div key={restaurant.placeId}>
                     <div className="restaurants-section">
                       <div className="restaurant-card">
+                        <div
+                          className="favorite-btn"
+                          onClick={() => handleClickAddFavorite(restaurant._id)}
+                        >
+                          {userFavorites ? (
+                            <>
+                              {" "}
+                              {userFavorites.indexOf(restaurant._id) !== -1 ? (
+                                <FontAwesomeIcon
+                                  icon="fa-solid fa-heart"
+                                  className="favorite"
+                                />
+                              ) : (
+                                <FontAwesomeIcon
+                                  icon="fa-solid fa-heart"
+                                  className="favorite-false"
+                                />
+                              )}
+                            </>
+                          ) : (
+                            <FontAwesomeIcon
+                              icon="fa-solid fa-heart"
+                              className="favorite-false"
+                            />
+                          )}
+                        </div>
                         <Link
                           className="link-restaurant"
                           to={`/restaurant/${restaurant.name}`}
@@ -295,35 +322,36 @@ const Home = (props) => {
             <h2>Latest reviews</h2>
           </div>
           <div className="reviews-caroussel">
-            {dataReview.map((review, index) => {
-              return (
-                <div key={review._id}>
-                  <div className="reviews-card">
-                    <div className="review-avatar">
-                      <img src={cow} alt="" />
-                      <div>
-                        <p className="username">{review.username}</p>
-                        <p>Wrote a review</p>
+            {dataReview &&
+              dataReview.map((review, index) => {
+                return (
+                  <div key={review._id}>
+                    <div className="reviews-card">
+                      <div className="review-avatar">
+                        <img src={cow} alt="" />
+                        <div>
+                          <p className="username">{review.username}</p>
+                          <p>Wrote a review</p>
+                        </div>
+                      </div>
+
+                      <p className="review-title">{review.reviewTitle}</p>
+                      <p className="review-description">{review.review}</p>
+                      <div className="review-rating">
+                        <p>{review.name}</p>
+                        <StarRatings
+                          rating={review.rating}
+                          starRatedColor="#f7cc02"
+                          starDimension="17px"
+                          starSpacing="1px"
+                          numberOfStars={5}
+                          name="rating"
+                        />
                       </div>
                     </div>
-
-                    <p className="review-title">{review.reviewTitle}</p>
-                    <p className="review-description">{review.review}</p>
-                    <div className="review-rating">
-                      <p>{review.name}</p>
-                      <StarRatings
-                        rating={review.rating}
-                        starRatedColor="#f7cc02"
-                        starDimension="17px"
-                        starSpacing="1px"
-                        numberOfStars={5}
-                        name="rating"
-                      />
-                    </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
           </div>
         </section>
       </div>
