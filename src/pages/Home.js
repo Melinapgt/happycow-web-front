@@ -15,8 +15,14 @@ const Home = (props) => {
   const [dataReview, setDataReview] = useState();
 
   //props
-  const { search, setSearch, username, userFavorites, setUserFavorites } =
-    props;
+  const {
+    search,
+    setSearch,
+    username,
+    userFavorites,
+    setUserFavorites,
+    userToken,
+  } = props;
 
   //Scroll restaurants sur la home
   const refHomeRestaurants = useRef(null);
@@ -149,21 +155,24 @@ const Home = (props) => {
                           onClick={() => handleClickAddFavorite(restaurant._id)}
                         >
                           {/* --> si l'id du restaurant est présent dans le tableau des favoris, alors l'icon est en rouge */}
-                          {userFavorites ? (
-                            <>
-                              {" "}
-                              {userFavorites.indexOf(restaurant._id) !== -1 ? (
-                                <FontAwesomeIcon
-                                  icon="fa-solid fa-heart"
-                                  className="favorite"
-                                />
-                              ) : (
-                                <FontAwesomeIcon
-                                  icon="fa-solid fa-heart"
-                                  className="favorite-false"
-                                />
-                              )}
-                            </>
+                          {userToken ? (
+                            userFavorites && (
+                              <>
+                                {" "}
+                                {userFavorites.indexOf(restaurant._id) !==
+                                -1 ? (
+                                  <FontAwesomeIcon
+                                    icon="fa-solid fa-heart"
+                                    className="favorite"
+                                  />
+                                ) : (
+                                  <FontAwesomeIcon
+                                    icon="fa-solid fa-heart"
+                                    className="favorite-false"
+                                  />
+                                )}
+                              </>
+                            )
                           ) : (
                             <FontAwesomeIcon
                               icon="fa-solid fa-heart"
@@ -249,7 +258,7 @@ const Home = (props) => {
                           className="favorite-btn"
                           onClick={() => handleClickAddFavorite(restaurant._id)}
                         >
-                          {userFavorites ? (
+                          {userToken && userFavorites ? (
                             <>
                               {" "}
                               {userFavorites.indexOf(restaurant._id) !== -1 ? (

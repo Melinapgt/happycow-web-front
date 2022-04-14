@@ -104,6 +104,7 @@ function App() {
               <Home
                 search={search}
                 setSearch={setSearch}
+                userToken={userToken}
                 username={usernameCookies}
                 userFavorites={userFavorites}
                 setUserFavorites={setUserFavorites}
@@ -131,6 +132,7 @@ function App() {
                 userFavorites={userFavorites}
                 setUserFavorites={setUserFavorites}
                 username={usernameCookies}
+                userToken={userToken}
               />
             }
           />

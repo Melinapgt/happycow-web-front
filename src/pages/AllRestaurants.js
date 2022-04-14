@@ -15,8 +15,14 @@ const AllRestaurants = (props) => {
   const [page, setPage] = useState(1);
 
   //props
-  const { search, setSearch, userFavorites, setUserFavorites, username } =
-    props;
+  const {
+    search,
+    setSearch,
+    userFavorites,
+    setUserFavorites,
+    username,
+    userToken,
+  } = props;
 
   //setting nombre de reviews
   function getRandomInt(max) {
@@ -152,7 +158,7 @@ const AllRestaurants = (props) => {
                         onClick={() => handleClickAddFavorite(restaurant._id)}
                       >
                         {/* --> si l'id du restaurant est présent dans le tableau des favoris, alors l'icon est en rouge */}
-                        {userFavorites ? (
+                        {userToken && userFavorites ? (
                           <>
                             {" "}
                             {userFavorites.indexOf(restaurant._id) !== -1 ? (
