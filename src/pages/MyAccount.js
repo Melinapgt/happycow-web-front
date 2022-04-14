@@ -22,7 +22,7 @@ const MyAccount = (props) => {
     try {
       const getUserAccount = async () => {
         const response = await axios.get(
-          `http://localhost:3000/my-account?username=${username}`
+          `https://happycow.herokuapp.com/my-account?username=${username}`
         );
         console.log("reponse getUserAccount ==>", response.data);
         setData(response.data);

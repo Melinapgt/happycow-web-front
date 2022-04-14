@@ -41,13 +41,13 @@ const AllRestaurants = (props) => {
       const getAllrestaurants = async () => {
         if (search) {
           const response = await axios.get(
-            `http://localhost:3000/restaurants/all?page=${page}&search=${search}`
+            `https://happycow.herokuapp.com/restaurants/all?page=${page}&search=${search}`
           );
           console.log("response getSearchRestaurant==>", response.data);
           setData(response.data);
         } else {
           const response = await axios.get(
-            `http://localhost:3000/restaurants/all?page=${page}`
+            `https://happycow.herokuapp.com/restaurants/all?page=${page}`
           );
           console.log("response all restaurants==>", response.data);
           setData(response.data);
@@ -63,7 +63,7 @@ const AllRestaurants = (props) => {
       try {
         const getUser = async () => {
           const response = await axios.get(
-            `http://localhost:3000/my-account?username=${username}`
+            `https://happycow.herokuapp.com/my-account?username=${username}`
           );
           console.log("response userAccount home ==>", response.data);
           setUserFavorites(response.data.userAccount.favorites);
@@ -77,10 +77,13 @@ const AllRestaurants = (props) => {
 
   const handleClickAddFavorite = async (restaurantId) => {
     try {
-      const response = await axios.post("http://localhost:3000/favorites", {
-        username,
-        restaurantId,
-      });
+      const response = await axios.post(
+        "https://happycow.herokuapp.com/favorites",
+        {
+          username,
+          restaurantId,
+        }
+      );
       console.log("favorites==>", response.data);
       setUserFavorites(response.data.favorites);
     } catch (error) {
